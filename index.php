@@ -2588,7 +2588,11 @@ EOT;
 			);
 			return;
 		}
-		file_put_contents($path, $json, LOCK_EX);
+		if (file_put_contents($path, $json, LOCK_EX) === false) {
+			http_response_code(500);
+			$this->alert('danger', 'Could not save changes. Please check if data/database.js is writable by the web server.');
+			error_log(sprintf('%s - Could not write database file: %s', time(), $path));
+		}
 	}
 
 	/**

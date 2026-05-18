@@ -91,6 +91,9 @@ $(function() {
               .done(function() {
                   $("#save").show();
                   $('#save').delay(100).fadeOut();
+              })
+              .fail(function() {
+                  alert('Je wijziging kon niet worden opgeslagen. Controleer of data/database.js schrijfbaar is voor de webserver.');
               });
         }
     }
