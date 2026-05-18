@@ -30,7 +30,7 @@
 		<?= $Wcms->css() ?>
 		
 		<!-- Theme CSS -->
-		<link rel="stylesheet" rel="preload" as="style" href="<?= $Wcms->asset('css/style.css') ?>">
+		<link rel="stylesheet" href="<?= $Wcms->asset('css/style.css') ?>">
 	</head>
 
 	<body>
@@ -39,42 +39,50 @@
 
 		<?= $Wcms->alerts() ?>
 
-		<section id="topMenu">
-			<div class="inner">
-				<nav>
-					<ul class="menu">
-						<!-- Menu -->
-						<?= $Wcms->menu() ?>
+		<header class="site-header">
+			<div class="site-header__inner">
+				<a class="site-logo" href="<?= Wcms::url() ?>" aria-label="NEXT home">
+					<img src="<?= Wcms::url('data/files/logo next.png') ?>" alt="NEXT">
+				</a>
 
+				<nav class="site-nav" aria-label="Hoofdnavigatie">
+					<ul class="menu">
+						<?= $Wcms->menu() ?>
+						<li class="nav-item nav-item--signup">
+							<a class="nav-link" href="<?= Wcms::url('contact') ?>">Aanmelden</a>
+						</li>
 					</ul>
 				</nav>
 			</div>
-		</section>
+		</header>
 
-		<div id="wrapper">
-			<section id="intro" class="wrapper style1 fullscreen">
-				<div class="inner">
-					<!-- Main content for each page -->
-					<?= $Wcms->page('content') ?>
+		<main id="wrapper" class="site-main">
+			<?= $Wcms->page('content') ?>
+		</main>
 
+		<footer class="site-footer">
+			<div class="site-footer__inner">
+				<div class="footer-mark">
+					<img src="<?= Wcms::url('data/XFooter.png') ?>" alt="" aria-hidden="true">
 				</div>
-			</section>
-
-			<section class="wrapper style2">
-					<div class="inner">
-						<!-- Static editable block, same on each page -->
-						<?= $Wcms->block('subside') ?>
-
-					</div>
-			</section>
-		</div>
-
-		<footer class="wrapper style2">
-			<div class="inner">
-				<!-- Footer -->
-				<?= $Wcms->footer() ?>
-
+				<div class="footer-col">
+					<h2>Navigatie</h2>
+					<ul>
+						<li><a href="<?= Wcms::url() ?>">Home</a></li>
+						<li><a href="<?= Wcms::url('werking') ?>">Werking</a></li>
+						<li><a href="<?= Wcms::url('visie') ?>">Visie</a></li>
+						<li><a href="<?= Wcms::url('voor-wie') ?>">Voor wie</a></li>
+						<li><a href="<?= Wcms::url('over-ons') ?>">Over ons</a></li>
+					</ul>
+				</div>
+				<div class="footer-col footer-contact">
+					<h2>Contact</h2>
+					<p>raf@nextlier.be<br>debbie@nextlier.be<br>floor@nextlier.be</p>
+					<p>Beukenlaan 16 - Nijlen</p>
+					<p>0479/66.45.24</p>
+				</div>
 			</div>
+			<div class="site-footer__bottom">&copy; 2026 NEXT.</div>
 		</footer>
 
 		<!-- Admin JavaScript. More JS libraries can be added below -->

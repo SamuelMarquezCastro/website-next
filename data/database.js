@@ -1,7 +1,7 @@
 {
     "config": {
-        "siteTitle": "Next",
-        "siteLang": "en",
+        "siteTitle": "NEXT",
+        "siteLang": "nl",
         "adminLang": "en",
         "theme": "sky",
         "defaultPage": "home",
@@ -13,13 +13,13 @@
         "logoutToLoginScreen": true,
         "password": "$2y$10$g208zimWcMljnJLVJv.OL.WMTBB7XVKy0CKeI.rj.uYezZUgjvfAC",
         "lastLogins": {
-            "2026\/05\/18 12:22:34": "::1",
-            "2026\/05\/18 05:55:59": "193.191.150.44",
-            "2026\/05\/18 05:54:11": "193.191.150.44",
-            "2026\/05\/18 05:53:12": "193.191.150.44",
-            "2026\/05\/18 05:52:41": "193.191.150.44"
+            "2026/05/18 12:22:34": "::1",
+            "2026/05/18 05:55:59": "193.191.150.44",
+            "2026/05/18 05:54:11": "193.191.150.44",
+            "2026/05/18 05:53:12": "193.191.150.44",
+            "2026/05/18 05:52:41": "193.191.150.44"
         },
-        "lastModulesSync": "2026\/05\/18",
+        "lastModulesSync": "2026/05/18",
         "customModules": {
             "themes": {},
             "plugins": {}
@@ -72,79 +72,79 @@
             "title": "404",
             "keywords": "404",
             "description": "404",
-            "content": "<center><h1>404 - Page not found<\/h1><\/center>",
+            "content": "<center><h1>404 - Page not found</h1></center>",
             "subpages": {}
         },
         "home": {
             "created": "2026-04-30T11:26:15-04:00",
-            "modified": "2026-05-18T05:06:46-04:00",
+            "modified": "2026-05-18T12:46:46.300Z",
             "visibility": "show",
             "title": "Home",
-            "keywords": "Enter, page, keywords, for, search, engines",
-            "description": "A page description is also good for search engines.",
-            "content": "\n\n\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\n  <title>NEXT<\/title>\n\n  <link rel=\"stylesheet\" href=\"css\/normalize.css\">\n  <link rel=\"stylesheet\" href=\"css\/style.css\">\n\n\n\n  <header class=\"site-header\">\n    <a href=\"index.html\" class=\"site-logo\">NEXT<\/a>\n\n    <nav class=\"site-nav\">\n      <a href=\"#\">Home<\/a>\n      <a href=\"#\">Werking<\/a>\n      <a href=\"#\">Visie<\/a>\n      <a href=\"#\">Voor wie<\/a>\n      <a href=\"#\">Over ons<\/a>\n      <a href=\"#\">Aanmelden<\/a>\n      <a href=\"#\">Contact<\/a>\n    <\/nav>\n  <\/header>\n\n  <main>\n    <section class=\"hero\">\n      <p>welkom bij NEXT<\/p>\n      <h1>Groeien op jouw tempo<\/h1>\n    <\/section>\n\n    <section class=\"intro\">\n      <h2>De volgende stap, op jouw tempo<\/h2>\n\n      <p>\n        NEXT is een neutrale groeiplek voor jongeren. Hier ben je terecht voor rust,\n        verbinding en persoonlijke ontwikkeling.\n      <\/p>\n\n      <a href=\"#\">Ontdek wat we doen<\/a>\n    <\/section>\n  <\/main>\n\n  <footer class=\"site-footer\">\n    <p>© 2026 NEXT<\/p>\n  <\/footer>\n\n\n",
+            "keywords": "NEXT, jongeren, begeleiding, Nijlen",
+            "description": "NEXT is een neutrale groeiplek voor jongeren in Nijlen.",
+            "content": "\n<section class=\"section hero\">\n  <div class=\"section__inner\">\n    <p class=\"hero__kicker\">welkom bij NEXT</p>\n    <h1>Groeien op jouw tempo</h1>\n  </div>\n</section>\n\n<section class=\"section\">\n  <div class=\"section__inner split\">\n    <div class=\"intro-copy\">\n      <h2>De volgende stap,<br>op jouw tempo</h2>\n      <p>NEXT is een neutrale groeiplek voor jongeren. Hier kun je terecht voor rust, verbinding en persoonlijke ontwikkeling. We werken samen met scholen, CLB, jeugdzorg en ouders om jongeren de ruimte te geven die ze nodig hebben.</p>\n      <a class=\"button\" href=\"werking\">Ontdek Wat we doen</a>\n    </div>\n    <img class=\"poster\" src=\"data/FotoHome.png\" alt=\"De volgende stap op jouw tempo\">\n  </div>\n</section>\n\n<section class=\"quote-band\">\n  <blockquote>&ldquo;Hier mag je op jouw tempo opnieuw je weg vinden.&rdquo;</blockquote>\n</section>\n\n<section class=\"section center\">\n  <img class=\"decor decor--left\" src=\"data/files/backgroundvisuals.png\" alt=\"\" aria-hidden=\"true\">\n  <img class=\"decor decor--right\" src=\"data/files/backgroundvisuals.png\" alt=\"\" aria-hidden=\"true\">\n  <div class=\"section__inner\">\n    <h2 class=\"section-title\">Vier pijlers van groei</h2>\n    <p class=\"eyebrow\">Wat NEXT aanbiedt</p>\n    <div class=\"pillar-grid\">\n  <article class=\"pillar-card\">\n    <h3>Zelfredzaamheid</h3>\n    <p>We ondersteunen jongeren in het zelfstandig zetten van stappen richting hun toekomst.</p>\n  </article>\n  <article class=\"pillar-card\">\n    <h3>Beweging</h3>\n    <p>We geloven dat beweging een positieve impact heeft op zowel lichaam als geest.</p>\n  </article>\n  <article class=\"pillar-card\">\n    <h3>Creativiteit</h3>\n    <p>Creativiteit helpt jongeren om zichzelf uit te drukken, talenten te ontdekken en zelfvertrouwen op te bouwen.</p>\n  </article>\n  <article class=\"pillar-card\">\n    <h3>Zelfontplooiing</h3>\n    <p>We geven jongeren ruimte om te groeien, zichzelf beter te leren kennen en hun eigen pad te vinden.</p>\n  </article></div>\n  </div>\n</section>\n\n<section class=\"section section--blue section--tight cta cta--split\">\n  <div class=\"section__inner\">\n    <div>\n      <h2>Contact</h2>\n      <p><strong>Hulp nodig? Neem contact met ons op</strong><br>Heb je vragen of wil je graag inschrijven? Neem dan met ons contact op.</p>\n    </div>\n    <a class=\"button\" href=\"contact\">Contacteer ons</a>\n  </div>\n</section>\n<section class=\"pattern-band\" aria-hidden=\"true\"></section>",
             "subpages": {}
         },
         "werking": {
             "created": "2026-04-30T11:35:07-04:00",
-            "modified": "2026-05-18T04:56:07-04:00",
+            "modified": "2026-05-18T12:46:46.310Z",
             "title": "Werking",
-            "keywords": "Keywords, are, good, for, search, engines",
-            "description": "A short description is also good.",
+            "keywords": "NEXT, jongeren, begeleiding, Nijlen",
+            "description": "NEXT is een neutrale groeiplek voor jongeren in Nijlen.",
             "subpages": {},
             "visibility": "show",
-            "content": "<h2>Werking<\/h2>"
+            "content": "\n<section class=\"section page-hero\">\n  <div class=\"section__inner split\">\n    <div>\n      <p class=\"eyebrow\">Onze werking</p>\n      <h1>Hoe wij jongeren begeleiden</h1>\n      <p>We begeleiden jongeren stap voor stap, op maat van hun noden en in overleg met hun netwerk.</p>\n    </div>\n    <img class=\"hero-art\" src=\"data/files/fotoWerking.png\" alt=\"Jongeren in begeleiding\">\n  </div>\n</section>\n\n<section class=\"section\">\n  <img class=\"decor decor--left\" src=\"data/files/backgroundvisuals.png\" alt=\"\" aria-hidden=\"true\">\n  <img class=\"decor decor--right\" src=\"data/files/backgroundvisuals.png\" alt=\"\" aria-hidden=\"true\">\n  <div class=\"section__inner\">\n    <div class=\"timeline\">\n      <article class=\"timeline-step\"><span class=\"timeline-step__number\">1</span><div><h2>Kennismaking</h2><p>We bekijken samen met de jongere en het betrokken netwerk wat haalbaar is en waar de noden liggen.</p></div></article>\n      <article class=\"timeline-step\"><span class=\"timeline-step__number\">2</span><div><h2>Traject bepalen</h2><p>In onderling overleg bepalen we hoe vaak en wanneer de jongere naar NEXT komt.</p></div></article>\n      <article class=\"timeline-step\"><span class=\"timeline-step__number\">3</span><div><h2>Begeleiding op maat</h2><p>We spelen in op de individuele noden van de jongere, via individuele begeleiding en activiteiten in kleine groepjes.</p></div></article>\n      <article class=\"timeline-step\"><span class=\"timeline-step__number\">4</span><div><h2>Evaluatie</h2><p>Na een tussentijdse evaluatie bekijken we samen of het traject verlengd wordt of aangepast moet worden.</p></div></article>\n      <article class=\"timeline-step\"><span class=\"timeline-step__number\">5</span><div><h2>Engagement</h2><p>We werken laagdrempelig en op maat van het tempo van de jongere, maar verwachten ook engagement.</p></div></article>\n    </div>\n  </div>\n</section>\n\n<section class=\"section section--blue section--tight cta\">\n  <div class=\"section__inner\">\n    <h2>Klaar om samen te werken?</h2>\n    <p>Zet de eerste stap en schrijf je nu in via de inschrijvingsbutton hieronder. Samen werken we aan groei en welzijn voor jongeren.</p>\n    <a class=\"button\" href=\"contact\">Aanmelden</a>\n  </div>\n</section>\n<section class=\"pattern-band\" aria-hidden=\"true\"></section>"
         },
         "visie": {
             "created": "2026-04-30T11:35:48-04:00",
-            "modified": "2026-04-30T11:36:00-04:00",
+            "modified": "2026-05-18T12:46:46.310Z",
             "title": "Visie",
-            "keywords": "Keywords, are, good, for, search, engines",
-            "description": "A short description is also good.",
+            "keywords": "NEXT, jongeren, begeleiding, Nijlen",
+            "description": "NEXT is een neutrale groeiplek voor jongeren in Nijlen.",
             "subpages": {},
             "visibility": "show",
-            "content": "<h2>Visie<\/h2>"
+            "content": "\n<section class=\"section page-hero\">\n  <div class=\"section__inner split\">\n    <div>\n      <p class=\"eyebrow\">Onze visie</p>\n      <h1>Hoe wij denken</h1>\n      <p>Bij NEXT geloven we in de kracht van groei, verbinding en kansen op maat van elke jongere.</p>\n      <p>We vertrekken vanuit een positieve en respectvolle aanpak, zonder oordeel. Samen met de jongere bouwen we aan vertrouwen, open communicatie en een veilige omgeving waarin iedereen zichzelf kan zijn.</p>\n    </div>\n    <img class=\"hero-art\" src=\"data/files/fotoVisie.png\" alt=\"NEXT visie\">\n  </div>\n</section>\n\n<section class=\"section center\">\n  <img class=\"decor decor--left\" src=\"data/files/backgroundvisuals.png\" alt=\"\" aria-hidden=\"true\">\n  <img class=\"decor decor--right\" src=\"data/files/backgroundvisuals.png\" alt=\"\" aria-hidden=\"true\">\n  <div class=\"section__inner\">\n    <h2 class=\"section-title\">Vier pijlers van groei</h2>\n    <div class=\"puzzle-wrap\">\n      \n  <article class=\"puzzle-card\">\n    <h3>Zelfredzaamheid</h3>\n    <p>We ondersteunen jongeren in het zelfstandig zetten van stappen richting hun toekomst.</p>\n  </article>\n  <article class=\"puzzle-card\">\n    <h3>Beweging</h3>\n    <p>We geloven dat beweging een positieve impact heeft op zowel lichaam als geest.</p>\n  </article>\n  <article class=\"puzzle-card\">\n    <h3>Creativiteit</h3>\n    <p>Creativiteit helpt jongeren om zichzelf uit te drukken, talenten te ontdekken en zelfvertrouwen op te bouwen.</p>\n  </article>\n  <article class=\"puzzle-card\">\n    <h3>Zelfontplooiing</h3>\n    <p>We geven jongeren ruimte om te groeien, zichzelf beter te leren kennen en hun eigen pad te vinden.</p>\n  </article>\n    </div>\n  </div>\n</section>\n\n<section class=\"section section--blue section--tight cta\">\n  <div class=\"section__inner\">\n    <h2>Wil je meer weten?</h2>\n    <p>Neem contact met ons op voor meer informatie over NEXT en onze werkwijze.</p>\n    <a class=\"button\" href=\"contact\">Contacteer ons</a>\n  </div>\n</section>\n<section class=\"pattern-band\" aria-hidden=\"true\"></section>"
         },
         "voor-wie": {
             "created": "2026-04-30T11:36:22-04:00",
-            "modified": "2026-04-30T11:36:43-04:00",
+            "modified": "2026-05-18T12:46:46.310Z",
             "title": "Voor Wie",
-            "keywords": "Keywords, are, good, for, search, engines",
-            "description": "A short description is also good.",
+            "keywords": "NEXT, jongeren, begeleiding, Nijlen",
+            "description": "NEXT is een neutrale groeiplek voor jongeren in Nijlen.",
             "subpages": {},
             "visibility": "show",
-            "content": "<h2>Voor wie<\/h2>"
+            "content": "\n<section class=\"section page-hero\">\n  <div class=\"section__inner split\">\n    <div>\n      <p class=\"eyebrow\">Voor wie</p>\n      <h1>Samen werken aan het welzijn van jongeren</h1>\n      <p>NEXT is er voor jongeren tussen 13 en 19 jaar die vastlopen op school, thuis, met vrienden of andere levensdomeinen. We ondersteunen jongeren die het even moeilijk hebben, dreigen uit te vallen op school of weinig toekomstperspectief ervaren.</p>\n    </div>\n    <img class=\"hero-art\" src=\"data/files/fotoVoorwie.png\" alt=\"Voor wie NEXT er is\">\n  </div>\n</section>\n\n<section class=\"section section--tight\">\n  <div class=\"section__inner audience-grid\">\n    <article class=\"audience-card\"><h3>Voor Scholen</h3><p>Wij ondersteunen scholen bij begeleiding van leerlingen die extra aandacht nodig hebben.</p></article>\n    <article class=\"audience-card\"><h3>Voor CLB</h3><p>Als CLB kun je doorverwijzen naar NEXT voor laagdrempelige ondersteuning.</p></article>\n    <article class=\"audience-card\"><h3>Voor Ouders</h3><p>Ook ouders kunnen rechtstreeks contact opnemen met NEXT. We luisteren naar zorgen en bekijken samen wat de beste stap is.</p></article>\n  </div>\n</section>\n\n<section class=\"section center\">\n  <img class=\"decor decor--left\" src=\"data/files/backgroundvisuals.png\" alt=\"\" aria-hidden=\"true\">\n  <img class=\"decor decor--right\" src=\"data/files/backgroundvisuals.png\" alt=\"\" aria-hidden=\"true\">\n  <div class=\"section__inner\">\n    <h2 class=\"section-title\">Onze activiteiten</h2>\n    <div class=\"activity-grid\">\n      <article class=\"activity-card\"><img class=\"activity-card__image\" src=\"data/files/atelier.png\" alt=\"Atelier\"><h3>Atelier</h3><p>Een creatieve ruimte waar jongeren kunnen bouwen, ontwerpen en experimenteren.</p></article>\n      <article class=\"activity-card\"><img class=\"activity-card__image\" src=\"data/files/crea.png\" alt=\"Crea\"><h3>Crea</h3><p>Via creatieve activiteiten stimuleren we expressie, rust en zelfvertrouwen.</p></article>\n      <article class=\"activity-card\"><img class=\"activity-card__image\" src=\"data/files/keuken.png\" alt=\"Keuken\"><h3>Keuken</h3><p>Samen koken en eten versterkt zelfstandigheid, samenwerking en structuur.</p></article>\n      <article class=\"activity-card\"><img class=\"activity-card__image\" src=\"data/files/sportspel.png\" alt=\"Sport en spel\"><h3>Sport &amp; spel</h3><p>Beweging en spel zorgen voor ontspanning, verbinding en positieve energie.</p></article>\n    </div>\n  </div>\n</section>\n\n<section class=\"section section--blue section--tight cta cta--split\">\n  <div class=\"section__inner\">\n    <div>\n      <h2>Contact</h2>\n      <p><strong>Hulp nodig? Neem contact met ons op</strong><br>Heb je vragen of wil je graag inschrijven? Neem dan met ons contact op.</p>\n    </div>\n    <a class=\"button\" href=\"contact\">Contacteer ons</a>\n  </div>\n</section>\n<section class=\"pattern-band\" aria-hidden=\"true\"></section>"
         },
         "over-ons": {
             "created": "2026-05-11T07:58:44-04:00",
-            "modified": "2026-05-11T07:59:16-04:00",
+            "modified": "2026-05-18T12:46:46.310Z",
             "title": "Over Ons",
-            "keywords": "Keywords, are, good, for, search, engines",
-            "description": "A short description is also good.",
+            "keywords": "NEXT, jongeren, begeleiding, Nijlen",
+            "description": "NEXT is een neutrale groeiplek voor jongeren in Nijlen.",
             "subpages": {},
             "visibility": "show",
-            "content": "<h2>Over ons<\/h2>"
+            "content": "\n<section class=\"section page-hero\">\n  <div class=\"section__inner split split--wide\">\n    <div>\n      <p class=\"eyebrow\">Over ons</p>\n      <h1>Een plek waar jongeren zichzelf mogen zijn</h1>\n      <p>NEXT gelooft dat elke jongere een veilige ruimte verdient om te groeien. Een plek zonder druk, zonder oordeel, waar verbinding centraal staat.</p>\n      <div class=\"about-list\">\n        <article class=\"about-item\"><span class=\"about-letter\">N</span><div><h2>Nieuw begin</h2><p>Jongeren krijgen de kans om opnieuw te starten, zonder oordeel.</p></div></article>\n        <article class=\"about-item\"><span class=\"about-letter\">E</span><div><h2>Ervaring</h2><p>We bieden praktische, zinvolle begeleiding aan.</p></div></article>\n        <article class=\"about-item\"><span class=\"about-letter\">X</span><div><h2>X-factor</h2><p>Iedereen is uniek, heeft talenten en krachten. We gaan die samen ontdekken.</p></div></article>\n        <article class=\"about-item\"><span class=\"about-letter\">T</span><div><h2>Toekomstgericht</h2><p>Blik vooruit. We focussen op de toekomst en gaan samen doelen bepalen.</p></div></article>\n      </div>\n    </div>\n    <img class=\"hero-art\" src=\"data/files/fotoOverOns.png\" alt=\"Over NEXT\">\n  </div>\n</section>\n\n<section class=\"section section--tight\">\n  <div class=\"section__inner value-grid\">\n    <article class=\"value-card\"><h3>Verbinding</h3><p>Samen met anderen groeien en verbinden. Je staat er nooit alleen voor.</p></article>\n    <article class=\"value-card\"><h3>Neutrale groeiplek</h3><p>Een veilige ruimte waar je op je eigen tempo kan groeien.</p></article>\n    <article class=\"value-card\"><h3>Persoonlijke groei</h3><p>Blijven leren en jezelf uitdagen. Fouten zijn kansen om te groeien.</p></article>\n  </div>\n</section>\n<section class=\"pattern-band\" aria-hidden=\"true\"></section>\n\n<section class=\"section section--blue section--tight cta\">\n  <div class=\"section__inner\">\n    <h2>Wil je meer weten?</h2>\n    <p>Neem contact met ons op voor meer informatie over NEXT en onze werkwijze.</p>\n    <a class=\"button\" href=\"contact\">Contacteer ons</a>\n  </div>\n</section>\n\n<section class=\"section center\">\n  <img class=\"decor decor--right\" src=\"data/files/backgroundvisuals.png\" alt=\"\" aria-hidden=\"true\">\n  <div class=\"section__inner\">\n    <h2 class=\"section-title\">Ons Team</h2>\n    <div class=\"team-list\">\n      <article class=\"team-member\"><img src=\"data/files/Debbie.png\" alt=\"Debbie\"><div><h3>Debbie</h3><p>Ik ben Debbie en werk al meer dan 15 jaar actief in het secundair onderwijs. Jongeren krijgen bij mij een plek waar ze zichzelf kunnen zijn.</p></div></article>\n      <article class=\"team-member\"><img src=\"data/files/Raf.png\" alt=\"Raf\"><div><h3>Raf</h3><p>Ik ben Raf en werk vanuit ervaring in de fitness-sector. Daarnaast was ik jarenlang stapbegeleider in de richting Beweging en Sport.</p></div></article>\n      <article class=\"team-member\"><img src=\"data/files/floor.png\" alt=\"Floor\"><div><h3>Floor</h3><p>Ik ben Floor en werk als empathische spring-in-'t-veld. Ik geloof sterk dat jongeren een plek nodig hebben waar ze welkom zijn.</p></div></article>\n    </div>\n  </div>\n</section>"
         },
         "contact": {
             "created": "2026-05-11T07:59:32-04:00",
-            "modified": "2026-05-11T07:59:47-04:00",
+            "modified": "2026-05-18T12:46:46.310Z",
             "title": "Contact",
-            "keywords": "Keywords, are, good, for, search, engines",
-            "description": "A short description is also good.",
+            "keywords": "NEXT, jongeren, begeleiding, Nijlen",
+            "description": "NEXT is een neutrale groeiplek voor jongeren in Nijlen.",
             "subpages": {},
             "visibility": "show",
-            "content": "<h2>Contact<\/h2>"
+            "content": "\n<section class=\"section center\">\n  <div class=\"section__inner\">\n    <h1 class=\"section-title\">Contacteer ons</h1>\n    <p class=\"lead\">We horen graag van u!</p>\n    <div class=\"contact-grid\" style=\"margin-top: 90px;\">\n      <article class=\"contact-card\"><h3>Bel ons</h3><p><strong>0479/66.45.24</strong></p></article>\n      <article class=\"contact-card\"><h3>E-mail ons</h3><p><strong>raf@nextlier.be<br>debbie@nextlier.be<br>floor@nextlier.be</strong></p></article>\n      <article class=\"contact-card\"><h3>Bezoek ons</h3><p><strong>Beukenlaan 16 - Nijlen</strong></p></article>\n    </div>\n    <div class=\"map-frame\">\n      <iframe title=\"Locatie NEXT\" loading=\"lazy\" src=\"https://www.google.com/maps?q=Beukenlaan%2016%20Nijlen&output=embed\"></iframe>\n    </div>\n  </div>\n</section>"
         }
     },
     "blocks": {
         "subside": {
-            "content": "<h2>About your website???<\/h2><p><br><\/p>\n\n<br>\n<p>Website description, contact form, mini map or anything else.<\/p>\n<p>This editable area is visible on all pages.<\/p>"
+            "content": ""
         },
         "header": {
-            "content": "<nav>You can include this in your theme.php and edit it.<\/nav>"
+            "content": "<nav>You can include this in your theme.php and edit it.</nav>"
         },
         "footer": {
-            "content": "©2026 NEXT."
+            "content": "&copy; 2026 NEXT."
         }
     }
 }
