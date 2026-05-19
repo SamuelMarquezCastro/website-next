@@ -49,7 +49,7 @@
 					<ul class="menu">
 						<?= $Wcms->menu() ?>
 						<li class="nav-item nav-item--signup">
-							<a class="nav-link" href="<?= Wcms::url('contact') ?>">Aanmelden</a>
+							<a class="nav-link" href="https://forms.office.com/pages/responsepage.aspx?id=rjKKHSBshUOmlb_S_QwCS2QvhAZCDiZJgMqH-8yv_l1UOE1XRFhOUVBISVc0QjlPMUpPWEYyS0hVUS4u&route=shorturl" target="_blank" rel="noopener">Aanmelden</a>
 						</li>
 					</ul>
 				</nav>
