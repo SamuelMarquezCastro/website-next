@@ -47,7 +47,7 @@ body {
   background: var(--cream);
   color: var(--ink);
   font-family: "Catamaran", Arial, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 body,
@@ -55,7 +55,7 @@ button,
 input,
 textarea,
 select {
-  font: 400 18px/1.35 "Catamaran", Arial, sans-serif;
+  font: 400 16px/1.35 "Catamaran", Arial, sans-serif;
 }
 
 h1,
@@ -104,17 +104,17 @@ button {
 
 .site-header__inner {
   width: min(100%, 1360px);
-  min-height: 108px;
+  min-height: 74px;
   margin: 0 auto;
-  padding: 22px 48px;
+  padding: 14px 34px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 34px;
+  gap: 28px;
 }
 
 .site-logo img {
-  width: 158px;
+  width: 92px;
   height: auto;
 }
 
@@ -122,7 +122,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 30px;
+  gap: 22px;
   flex-wrap: wrap;
 }
 
@@ -132,6 +132,7 @@ button {
   justify-content: center;
   min-height: 44px;
   font-weight: 700;
+  font-size: 13px;
   color: var(--ink);
   transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
 }
@@ -148,8 +149,8 @@ button {
 .nav-item--signup .nav-link,
 .menu > .nav-item:nth-last-child(2) .nav-link {
   min-width: 132px;
-  padding: 10px 22px;
-  border: 3px solid var(--orange);
+  padding: 8px 18px;
+  border: 2px solid var(--orange);
   border-radius: 4px;
   color: #fff;
   background: var(--orange);
@@ -177,7 +178,7 @@ button {
 
 .section {
   position: relative;
-  padding: 120px 48px;
+  padding: 96px 48px;
 }
 
 .section--tight {
@@ -214,8 +215,8 @@ button {
 
 .split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
-  gap: 92px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.85fr);
+  gap: 80px;
   align-items: center;
 }
 
@@ -224,7 +225,7 @@ button {
 }
 
 .hero {
-  min-height: 640px;
+  min-height: clamp(360px, 38vw, 520px);
   display: flex;
   align-items: center;
   padding: 0 48px;
@@ -247,8 +248,8 @@ button {
 }
 
 .hero::after {
-  width: 230px;
-  height: 230px;
+  width: 250px;
+  height: 250px;
   background: rgba(249, 168, 38, 0.55);
 }
 
@@ -258,55 +259,71 @@ button {
 }
 
 .hero__kicker {
-  margin-bottom: 22px;
+  margin-bottom: 12px;
   color: var(--orange);
   font-weight: 700;
-  font-size: 22px;
+  font-size: 16px;
 }
 
 .hero h1,
 .page-hero h1 {
-  max-width: 560px;
-  font-size: clamp(48px, 6vw, 78px);
+  max-width: 410px;
+  font-size: clamp(42px, 5.8vw, 64px);
   line-height: 0.9;
   letter-spacing: 0;
 }
 
 .page-hero {
-  min-height: 620px;
+  min-height: 460px;
   display: flex;
   align-items: center;
 }
 
 .page-hero h1 {
-  margin-bottom: 42px;
-  font-size: clamp(40px, 4vw, 62px);
+  margin-bottom: 26px;
+  font-size: clamp(32px, 3.7vw, 48px);
   line-height: 1.08;
 }
 
 .page-hero p {
-  max-width: 670px;
-  font-size: 22px;
-  line-height: 1.2;
+  max-width: 560px;
+  font-size: 16px;
+  line-height: 1.12;
 }
 
 .page-hero .hero-art {
   justify-self: center;
-  width: min(100%, 470px);
+  width: min(100%, 360px);
 }
 
 .intro-copy h2,
 .section-title {
-  margin-bottom: 52px;
-  font-size: clamp(32px, 3vw, 46px);
+  margin-bottom: 44px;
+  font-size: clamp(28px, 3vw, 42px);
   line-height: 1.1;
 }
 
 .intro-copy p {
-  max-width: 470px;
-  margin-bottom: 46px;
-  font-size: 20px;
-  line-height: 1.15;
+  max-width: 390px;
+  margin-bottom: 42px;
+  font-size: 15px;
+  line-height: 1.08;
+}
+
+.home-intro-section {
+  padding-block: 110px 98px;
+}
+
+.home-intro-section .split {
+  grid-template-columns: minmax(0, 0.72fr) minmax(300px, 0.95fr);
+  gap: 96px;
+}
+
+.home-intro-section .poster--plain {
+  justify-self: center;
+  width: auto;
+  max-width: min(100%, 340px);
+  max-height: 540px;
 }
 
 .poster {
@@ -324,9 +341,9 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  min-width: 190px;
-  padding: 12px 28px;
+  min-height: 42px;
+  min-width: 148px;
+  padding: 10px 22px;
   border-radius: 6px;
   background: var(--orange);
   color: #fff;
@@ -344,14 +361,14 @@ button {
 }
 
 .quote-band {
-  padding: 72px 48px;
+  padding: 58px 48px;
   background: var(--blue);
   color: #fff;
   text-align: center;
 }
 
 .quote-band blockquote {
-  font-size: clamp(30px, 3vw, 44px);
+  font-size: clamp(26px, 2.7vw, 38px);
   font-weight: 700;
   line-height: 1.15;
 }
@@ -367,7 +384,7 @@ button {
 
 .decor {
   position: absolute;
-  width: 260px;
+  width: 220px;
   pointer-events: none;
   opacity: 0.9;
 }
@@ -389,6 +406,14 @@ button {
   display: grid;
   grid-template-columns: repeat(2, minmax(220px, 1fr));
   gap: 70px 104px;
+}
+
+.home-next-section {
+  padding-block: 110px 118px;
+}
+
+.home-next-inner {
+  width: min(100%, 760px);
 }
 
 .pillar-card,
@@ -486,13 +511,13 @@ button {
   width: min(100%, 820px);
   margin: 60px auto 0;
   display: grid;
-  gap: 64px;
+  gap: 70px;
 }
 
 .timeline::before {
   content: "";
   position: absolute;
-  left: 70px;
+  left: 50%;
   top: 30px;
   bottom: 30px;
   width: 3px;
@@ -503,8 +528,8 @@ button {
 .timeline-step {
   position: relative;
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
-  gap: 58px;
+  grid-template-columns: minmax(0, 1fr) 74px minmax(0, 1fr);
+  gap: 34px;
   align-items: center;
 }
 
@@ -534,25 +559,36 @@ button {
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
-  margin-left: 45px;
+  width: 42px;
+  height: 42px;
+  margin: 0 auto;
   border-radius: 50%;
   background: var(--green);
   color: #fff;
   font-weight: 700;
-  font-size: 26px;
+  font-size: 20px;
+  grid-column: 2;
+}
+
+.timeline-step > div {
+  grid-column: 3;
+}
+
+.timeline-step:nth-child(even) > div {
+  grid-column: 1;
+  grid-row: 1;
+  text-align: right;
 }
 
 .timeline-step h2 {
-  margin-bottom: 18px;
-  font-size: clamp(28px, 3vw, 38px);
+  margin-bottom: 14px;
+  font-size: clamp(24px, 2.4vw, 34px);
 }
 
 .timeline-step p {
-  max-width: 600px;
-  font-size: 20px;
-  line-height: 1.18;
+  max-width: 360px;
+  font-size: 15px;
+  line-height: 1.12;
 }
 
 .puzzle-wrap {
@@ -617,7 +653,7 @@ button {
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 56px;
+  gap: 80px;
 }
 
 .audience-card:nth-child(2),
@@ -671,7 +707,7 @@ button {
 }
 
 .about-hero {
-  align-items: flex-start;
+  align-items: center;
 }
 
 .about-hero .section__inner {
@@ -679,7 +715,7 @@ button {
 }
 
 .about-intro {
-  margin-bottom: 88px;
+  margin-bottom: 0;
 }
 
 .about-list {
@@ -689,14 +725,14 @@ button {
 
 .about-item {
   display: grid;
-  grid-template-columns: 94px minmax(0, 1fr);
-  gap: 44px;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 36px;
   align-items: center;
 }
 
 .about-letter {
   color: var(--orange);
-  font-size: 88px;
+  font-size: 78px;
   font-weight: 700;
   line-height: 1;
 }
@@ -707,18 +743,18 @@ button {
 
 .team-list {
   display: grid;
-  gap: 88px;
+  gap: 92px;
 }
 
 .team-member {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 70px;
+  grid-template-columns: 220px 1fr;
+  gap: 64px;
   align-items: center;
 }
 
 .team-member:nth-child(even) {
-  grid-template-columns: 1fr 260px;
+  grid-template-columns: 1fr 220px;
 }
 
 .team-member:nth-child(even) img {
@@ -726,19 +762,19 @@ button {
 }
 
 .team-member img {
-  width: 260px;
+  width: 220px;
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 4px;
 }
 
 .team-member h3 {
-  margin-bottom: 22px;
-  font-size: 28px;
+  margin-bottom: 18px;
+  font-size: 24px;
 }
 
 .team-member p {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.22;
   text-align: left;
 }
@@ -765,7 +801,7 @@ button {
 .site-footer {
   background: var(--green);
   color: var(--cream);
-  padding: 74px 64px 42px;
+  padding: 68px 64px 38px;
 }
 
 .site-footer__inner {
@@ -778,12 +814,12 @@ button {
 }
 
 .footer-mark img {
-  width: 230px;
+  width: 210px;
 }
 
 .footer-col h2 {
-  margin-bottom: 24px;
-  font-size: 28px;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
 .footer-col li + li,
@@ -793,7 +829,7 @@ button {
 
 .footer-col,
 .footer-col a {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--cream);
 }
 
@@ -1017,7 +1053,7 @@ button {
   }
 
   .site-logo img {
-    width: 128px;
+    width: 86px;
   }
 
   .site-nav .menu {
