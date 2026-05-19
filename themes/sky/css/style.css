@@ -543,14 +543,14 @@ button {
 
 .timeline-step__icon {
   position: absolute;
-  left: -210px;
-  width: 118px;
-  max-height: 118px;
+  left: -185px;
+  width: 134px;
+  max-height: 134px;
   object-fit: contain;
 }
 
 .timeline-step__icon--right {
-  right: -210px;
+  right: -185px;
   left: auto;
 }
 
@@ -704,6 +704,8 @@ button {
 
 .activity-card__icon {
   margin: 0 0 14px;
+  width: 42px;
+  height: 42px;
 }
 
 .about-hero {
@@ -836,8 +838,8 @@ button {
 .site-footer__bottom {
   width: min(100%, var(--content));
   margin: 54px auto 0;
-  padding-top: 26px;
-  border-top: 1px solid rgba(248, 241, 232, 0.55);
+  padding-top: 28px;
+  border-top: 2px solid rgba(248, 241, 232, 0.72);
   font-size: 14px;
   font-weight: 700;
 }

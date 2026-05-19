@@ -82,7 +82,7 @@
 					<p>0479/66.45.24</p>
 				</div>
 			</div>
-			<div class="site-footer__bottom">&copy; 2026 NEXT.</div>
+			<div class="site-footer__bottom">&copy; 2026 NEXT</div>
 		</footer>
 
 		<!-- Admin JavaScript. More JS libraries can be added below -->
