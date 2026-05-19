@@ -27,6 +27,7 @@
   --grey: #d8d3cf;
   --line: rgba(116, 134, 112, 0.35);
   --shadow: 0 14px 28px rgba(35, 45, 33, 0.12);
+  --shadow-soft: 0 16px 34px rgba(35, 45, 33, 0.1);
   --content: 1180px;
 }
 
@@ -425,6 +426,12 @@ button {
   padding: 30px;
   background: rgba(248, 241, 232, 0.62);
   text-align: center;
+}
+
+.audience-card,
+.value-card,
+.contact-card {
+  box-shadow: var(--shadow-soft);
 }
 
 .pillar-card img,
@@ -983,6 +990,20 @@ button {
 .has-scroll-animations .site-footer.reveal-on-scroll,
 .has-scroll-animations .site-footer__bottom,
 .has-scroll-animations .site-footer__bottom.reveal-on-scroll {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.has-scroll-animations .site-main > .hero.reveal-on-scroll,
+.has-scroll-animations .site-main > .home-intro-section.reveal-on-scroll {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.has-scroll-animations .site-main > .hero .reveal-on-scroll,
+.has-scroll-animations .site-main > .home-intro-section .reveal-on-scroll {
   opacity: 1;
   transform: none;
   transition: none;
