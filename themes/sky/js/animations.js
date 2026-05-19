@@ -12,7 +12,6 @@
     ".section",
     ".quote-band",
     ".pattern-band",
-    ".site-footer",
     ".hero__kicker",
     ".hero h1",
     ".page-hero h1",
@@ -37,7 +36,6 @@
     ".map-frame",
     ".footer-mark",
     ".footer-col",
-    ".site-footer__bottom",
   ];
 
   const staggerContainers = [
@@ -49,7 +47,6 @@
     [".timeline", ".timeline-step"],
     [".about-list", ".about-item"],
     [".team-list", ".team-member"],
-    [".site-footer__inner", ".footer-mark, .footer-col"],
   ];
 
   const revealItems = new Set();

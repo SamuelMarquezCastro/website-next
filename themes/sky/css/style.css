@@ -817,57 +817,57 @@ button {
 .site-footer {
   background: var(--green);
   color: var(--cream);
-  padding: 84px 64px 46px;
+  padding: 58px 64px 34px;
 }
 
 .site-footer__inner {
   width: min(100%, var(--content));
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(300px, 1.35fr) minmax(160px, 0.46fr) minmax(260px, 0.74fr);
-  gap: 96px;
+  grid-template-columns: minmax(250px, 1.45fr) minmax(150px, 0.48fr) minmax(260px, 0.78fr);
+  gap: 82px;
   align-items: start;
 }
 
 .footer-mark img {
-  width: 286px;
+  width: 232px;
 }
 
 .footer-col h2 {
-  margin-bottom: 28px;
-  font-size: 32px;
+  margin-bottom: 22px;
+  font-size: 27px;
   line-height: 1;
 }
 
 .footer-col li + li,
 .footer-col p + p {
-  margin-top: 18px;
+  margin-top: 13px;
 }
 
 .footer-col,
 .footer-col a {
-  font-size: 24px;
+  font-size: 19px;
   line-height: 1.22;
   color: var(--cream);
 }
 
 .footer-contact__item {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
   align-items: center;
 }
 
 .footer-contact__icon {
   display: inline-flex;
   justify-content: center;
-  width: 34px;
+  width: 28px;
   color: var(--cream);
 }
 
 .footer-contact__icon svg {
-  width: 28px;
-  height: 28px;
+  width: 23px;
+  height: 23px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2.2;
@@ -877,10 +877,10 @@ button {
 
 .site-footer__bottom {
   width: min(100%, var(--content));
-  margin: 56px auto 0;
-  padding-top: 50px;
+  margin: 36px auto 0;
+  padding-top: 30px;
   border-top: 1px solid rgba(248, 241, 232, 0.95);
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -977,6 +977,15 @@ button {
 
 .has-scroll-animations .pattern-band.is-visible {
   animation: pattern-drift 28s linear infinite;
+}
+
+.has-scroll-animations .site-footer,
+.has-scroll-animations .site-footer.reveal-on-scroll,
+.has-scroll-animations .site-footer__bottom,
+.has-scroll-animations .site-footer__bottom.reveal-on-scroll {
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
 @keyframes pattern-drift {
