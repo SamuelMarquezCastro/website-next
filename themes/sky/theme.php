@@ -87,6 +87,7 @@
 
 		<!-- Admin JavaScript. More JS libraries can be added below -->
 		<?= $Wcms->js() ?>
+		<script src="<?= $Wcms->asset('js/animations.js') ?>"></script>
 
 	</body>
 </html>
