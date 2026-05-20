@@ -29,7 +29,7 @@ class Wcms
 	];
 	private const DISABLED_PLUGINS_KEY = 'disabledPlugins';
 	private const EXCLUSIVE_PLUGIN_GROUPS = ['editor', 'translation'];
-	private const LOCKED_PAGE_CONTENT = ['home', 'werking', 'visie', 'over-ons'];
+	private const LOCKED_PAGE_CONTENT = ['werking', 'visie', 'over-ons'];
 	private const PARTIAL_LOCK_PAGE_CONTENT = ['voor-wie'];
 
 	/** Database main keys */
@@ -421,9 +421,10 @@ class Wcms
 		$content = '';
 
 		if (isset($blocks->{$key})) {
+			$blockContent = $this->normalizeHtmlContent((string)$blocks->{$key}->content);
 			$content = $this->loggedIn
-				? $this->editable($key, $blocks->{$key}->content, 'blocks')
-				: $blocks->{$key}->content;
+				? $this->editable($key, $blockContent, 'blocks')
+				: $blockContent;
 		}
 		return $this->hook('block', $content, $key)[0];
 	}
@@ -1123,7 +1124,24 @@ EOT;
 	 */
 	public function editable(string $id, string $content, string $dataTarget = ''): string
 	{
+		$content = $this->normalizeHtmlContent($content);
 		return '<div' . ($dataTarget !== '' ? ' data-target="' . $dataTarget . '"' : '') . ' id="' . $id . '" class="editText editable">' . $content . '</div>';
+	}
+
+	private function normalizeHtmlContent(string $content): string
+	{
+		for ($i = 0; $i < 3; $i++) {
+			if (!str_contains($content, '&lt;') && !str_contains($content, '&gt;') && !str_contains($content, '&quot;')) {
+				break;
+			}
+			$decoded = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+			if ($decoded === $content) {
+				break;
+			}
+			$content = $decoded;
+		}
+
+		return $content;
 	}
 
 	/**
@@ -2564,7 +2582,7 @@ EOT;
 				: (object)$this->notFoundView();
 		}
 
-		$segments->content = $segments->content ?? '<h2>Click here add content</h2>';
+		$segments->content = $this->normalizeHtmlContent($segments->content ?? '<h2>Click here add content</h2>');
 		$pageContent = $segments->content;
 		if ($this->loggedIn && $this->isPartiallyLockedPageContent()) {
 			$pageContent = $this->lockEditablePageSections($pageContent);
@@ -2856,8 +2874,12 @@ EOT;
 				if (!isset($this->db->blocks->{$fieldname})) {
 					$this->db->blocks->{$fieldname} = (object)['content' => ''];
 				}
+				$content = $this->normalizeHtmlContent($content);
 				$this->set('blocks', $fieldname, 'content', $content);
 			} elseif ($target === 'pages') {
+				if ($fieldname === 'content') {
+					$content = $this->normalizeHtmlContent($content);
+				}
 				if ($fieldname === 'content' && !$this->isCurrentPageContentEditable()) {
 					$this->alert('info', 'Deze pagina-inhoud is vastgezet en kan niet via de CMS aangepast worden.');
 					return;

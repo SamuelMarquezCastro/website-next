@@ -11,25 +11,20 @@ function next_html(string $value): string
 	return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
-function next_block_content(Wcms $Wcms, string $key, string $default): string
+function next_decode_html_content(string $content): string
 {
-	$blocks = $Wcms->get('blocks');
-	return isset($blocks->{$key}->content) ? (string) $blocks->{$key}->content : $default;
-}
-
-function next_editable_block(Wcms $Wcms, string $tag, string $key, string $default, string $class = '', string $attributes = ''): string
-{
-	$content = next_block_content($Wcms, $key, $default);
-	$classValue = trim('editText editable ' . $class);
-	$attributeText = $attributes !== '' ? ' ' . trim($attributes) : '';
-
-	if ($Wcms->loggedIn) {
-		return '<' . $tag . ' data-target="blocks" id="' . next_html($key) . '" class="' . next_html($classValue) . '"' . $attributeText . '>' . $content . '</' . $tag . '>';
+	for ($i = 0; $i < 3; $i++) {
+		if (!str_contains($content, '&lt;') && !str_contains($content, '&gt;') && !str_contains($content, '&quot;')) {
+			break;
+		}
+		$decoded = html_entity_decode($content, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+		if ($decoded === $content) {
+			break;
+		}
+		$content = $decoded;
 	}
 
-	$publicClass = trim($class);
-	$classAttribute = $publicClass !== '' ? ' class="' . next_html($publicClass) . '"' : '';
-	return '<' . $tag . $classAttribute . $attributeText . '>' . $content . '</' . $tag . '>';
+	return $content;
 }
 
 function next_team_path(): string
@@ -132,36 +127,6 @@ function next_team_image_options(string $selected): string
 		$options .= '<option value="' . next_html($value) . '"' . $isSelected . '>' . next_html(basename($file)) . '</option>';
 	}
 	return $options;
-}
-
-function next_render_home_page(Wcms $Wcms): string
-{
-	$output = '<section class="section hero">';
-	$output .= '<div class="section__inner">';
-	$output .= next_editable_block($Wcms, 'p', 'homeHeroKicker', 'welkom bij NEXT', 'hero__kicker');
-	$output .= next_editable_block($Wcms, 'h1', 'homeHeroTitle', 'Groeien op jouw tempo');
-	$output .= '</div></section>';
-	$output .= '<section class="section home-intro-section"><div class="section__inner split"><div class="intro-copy">';
-	$output .= next_editable_block($Wcms, 'h2', 'homeIntroTitle', 'De volgende stap,<br>op jouw tempo');
-	$output .= next_editable_block($Wcms, 'p', 'homeIntroText', 'NEXT is een <strong>praktische dagbesteding</strong> voor jongeren die tijdelijk <strong>uitvallen of vastlopen</strong>. In een <strong>warme en veilige omgeving</strong> krijgen jongeren de ruimte om tot rust te komen, opnieuw <strong>vertrouwen</strong> op te bouwen en stap voor stap te werken aan hun <strong>toekomst</strong>.', '', 'style="text-align: justify;"');
-	$output .= '<div style="text-align: justify;">' . next_editable_block($Wcms, 'a', 'homeIntroButtonText', 'Ontdek Wat we doen', 'button', 'href="werking"') . '</div>';
-	$output .= '</div><img class="poster poster--plain" src="data/files/FotoHome.png" alt="De volgende stap op jouw tempo"></div></section>';
-	$output .= '<section class="quote-band">' . next_editable_block($Wcms, 'blockquote', 'homeQuote', '“Hier mag je op jouw tempo opnieuw je weg vinden.”') . '</section>';
-	$output .= '<section class="section home-next-section">';
-	$output .= '<img class="decor decor--left" src="data/files/backgroundvisuals.png" alt="" aria-hidden="true">';
-	$output .= '<img class="decor decor--right" src="data/files/backgroundvisuals.png" alt="" aria-hidden="true">';
-	$output .= '<div class="section__inner home-next-inner"><div class="about-list">';
-	$output .= '<article class="about-item"><span class="about-letter">N</span><div>' . next_editable_block($Wcms, 'h2', 'homeAboutNTitle', 'Nieuw begin') . next_editable_block($Wcms, 'p', 'homeAboutNText', 'Jongeren krijgen de kans om <strong>opnieuw te starten</strong>, <strong>zonder oordeel</strong>. We bieden een <strong>warme, neutrale en veilige plek</strong> waar jongeren zichzelf kunnen zijn.') . '</div></article>';
-	$output .= '<article class="about-item"><span class="about-letter">E</span><div>' . next_editable_block($Wcms, 'h2', 'homeAboutETitle', 'Ervaring') . next_editable_block($Wcms, 'p', 'homeAboutEText', 'We bieden een <strong>praktische, zinvolle dagbesteding</strong> aan. We leren door te doen en werken zeer <strong>laagdrempelig</strong> en <strong>op maat</strong> van de jongere.') . '</div></article>';
-	$output .= '<article class="about-item"><span class="about-letter">X</span><div>' . next_editable_block($Wcms, 'h2', 'homeAboutXTitle', 'X-factor') . next_editable_block($Wcms, 'p', 'homeAboutXText', 'Iedereen is <strong>uniek</strong>, heeft <strong>talenten en krachten</strong>. We gaan die samen ontdekken. We nemen even de time-out en staan stil bij onszelf.') . '</div></article>';
-	$output .= '<article class="about-item"><span class="about-letter">T</span><div>' . next_editable_block($Wcms, 'h2', 'homeAboutTTitle', 'Toekomstgericht') . next_editable_block($Wcms, 'p', 'homeAboutTText', '<strong>Blik vooruit.</strong> We focussen op de <strong>toekomst</strong> en gaan samen <strong>doelen bepalen</strong>. Wat komt, telt meer dan wat achter ons ligt.') . '</div></article>';
-	$output .= '</div></div></section>';
-	$output .= '<section class="section section--blue section--tight cta cta--split"><div class="section__inner"><div>';
-	$output .= next_editable_block($Wcms, 'h2', 'homeCtaTitle', 'Contact');
-	$output .= next_editable_block($Wcms, 'p', 'homeCtaText', '<strong>Hulp nodig? Neem contact met ons op</strong><br>Heb je vragen of wil je graag inschrijven? Neem dan met ons contact op.');
-	$output .= '</div>' . next_editable_block($Wcms, 'a', 'homeCtaButtonText', 'Contacteer ons', 'button', 'href="contact"') . '</div></section>';
-	$output .= '<section class="pattern-band" aria-hidden="true"></section>';
-	return $output;
 }
 
 function next_handle_team_post(Wcms $Wcms): void
@@ -274,7 +239,7 @@ $footerContactDefault = '
 		<span>0479/66.45.24</span>
 	</p>';
 $blocks = $Wcms->get('blocks');
-$footerContactContent = isset($blocks->footerContact) ? $blocks->footerContact->content : $footerContactDefault;
+$footerContactContent = next_decode_html_content(isset($blocks->footerContact) ? (string) $blocks->footerContact->content : $footerContactDefault);
 $footerContact = $Wcms->loggedIn
 	? $Wcms->editable('footerContact', $footerContactContent, 'blocks')
 	: $footerContactContent;
@@ -349,9 +314,7 @@ $isLoginPage = $Wcms->currentPage === $Wcms->get('config', 'login') && !$Wcms->l
 		<main id="wrapper" class="site-main">
 			<?php
 				$pageContent = $Wcms->page('content');
-				if ($Wcms->currentPage === 'home') {
-					$pageContent = next_render_home_page($Wcms);
-				} elseif ($Wcms->currentPage === 'over-ons') {
+				if ($Wcms->currentPage === 'over-ons') {
 					$pageContent = next_replace_team_section($pageContent, $team, $Wcms->loggedIn, $Wcms->getToken());
 				}
 				echo $pageContent;

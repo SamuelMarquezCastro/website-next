@@ -16,7 +16,6 @@ $(function() {
             ['para', ['ul', 'ol', 'paragraph']],
             ['insert', ['link', 'doc', 'image', 'video']], // CHANGED 'picture' to 'image'
             ['table', ['table']],
-            ['misc', ['codeview']],
         ],
         placeholder: 'Click here to enter content.',
         callbacks: {
