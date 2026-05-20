@@ -447,7 +447,7 @@ button {
 .value-card {
   min-height: 230px;
   padding: 34px 34px 38px;
-  background: rgba(248, 241, 232, 0.88);
+  background: #fdf2e5;
   border: 0;
   box-shadow: var(--shadow);
   text-align: left;
