@@ -277,8 +277,10 @@ button {
 }
 
 .admin-login-aside img {
-  width: 104px;
-  filter: brightness(0) invert(1);
+  width: 116px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: var(--cream);
 }
 
 .admin-login-label,
@@ -1632,7 +1634,7 @@ h4,
   }
 
   .admin-login-aside img {
-    width: 92px;
+    width: 108px;
   }
 
   .admin-login-label {
