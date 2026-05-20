@@ -435,8 +435,6 @@ button {
 }
 
 .pillar-card,
-.audience-card,
-.value-card,
 .contact-card {
   border: 3px solid var(--orange);
   border-radius: 6px;
@@ -446,7 +444,15 @@ button {
 }
 
 .audience-card,
-.value-card,
+.value-card {
+  min-height: 230px;
+  padding: 34px 34px 38px;
+  background: rgba(248, 241, 232, 0.88);
+  border: 0;
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
 .contact-card {
   box-shadow: var(--shadow-soft);
 }
@@ -462,6 +468,8 @@ button {
 }
 
 .audience-card img {
+  width: 42px;
+  height: 42px;
   margin-right: auto;
   margin-left: 0;
 }
@@ -480,6 +488,10 @@ button {
   margin-bottom: 10px;
   font-size: 22px;
   line-height: 1.1;
+}
+
+.audience-card h3:has(br:only-child) {
+  display: none;
 }
 
 .pillar-card p,
@@ -696,11 +708,11 @@ button {
 
 .audience-card:nth-child(2),
 .value-card:nth-child(2) {
-  border-color: var(--green);
+  box-shadow: 0 14px 28px rgba(116, 134, 112, 0.16);
 }
 
 .audience-card:nth-child(3) {
-  border-color: var(--blue);
+  box-shadow: 0 14px 28px rgba(0, 73, 102, 0.14);
 }
 
 .activity-grid {
