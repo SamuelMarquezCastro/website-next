@@ -16,6 +16,80 @@ function next_team_path(): string
 	return next_root_path('data/team.json');
 }
 
+function next_home_path(): string
+{
+	return next_root_path('data/home.json');
+}
+
+function next_default_home(): array
+{
+	return [
+		'hero_kicker' => 'welkom bij NEXT',
+		'hero_title' => 'Groeien op jouw tempo',
+		'intro_title' => "De volgende stap,\nop jouw tempo",
+		'intro_text' => 'NEXT is een praktische dagbesteding voor jongeren die tijdelijk uitvallen of vastlopen. In een warme en veilige omgeving krijgen jongeren de ruimte om tot rust te komen, opnieuw vertrouwen op te bouwen en stap voor stap te werken aan hun toekomst.',
+		'intro_button_text' => 'Ontdek Wat we doen',
+		'intro_button_link' => 'werking',
+		'quote' => 'Hier mag je op jouw tempo opnieuw je weg vinden.',
+		'about' => [
+			[
+				'letter' => 'N',
+				'title' => 'Nieuw begin',
+				'text' => 'Jongeren krijgen de kans om opnieuw te starten, zonder oordeel. We bieden een warme, neutrale en veilige plek waar jongeren zichzelf kunnen zijn.'
+			],
+			[
+				'letter' => 'E',
+				'title' => 'Ervaring',
+				'text' => 'We bieden een praktische, zinvolle dagbesteding aan. We leren door te doen en werken zeer laagdrempelig en op maat van de jongere.'
+			],
+			[
+				'letter' => 'X',
+				'title' => 'X-factor',
+				'text' => 'Iedereen is uniek, heeft talenten en krachten. We gaan die samen ontdekken. We nemen even de time-out en staan stil bij onszelf.'
+			],
+			[
+				'letter' => 'T',
+				'title' => 'Toekomstgericht',
+				'text' => 'Blik vooruit. We focussen op de toekomst en gaan samen doelen bepalen. Wat komt, telt meer dan wat achter ons ligt.'
+			]
+		],
+		'cta_title' => 'Contact',
+		'cta_text' => 'Hulp nodig? Neem contact met ons op. Heb je vragen of wil je graag inschrijven? Neem dan met ons contact op.',
+		'cta_button_text' => 'Contacteer ons',
+		'cta_button_link' => 'contact'
+	];
+}
+
+function next_load_home(): array
+{
+	$path = next_home_path();
+	if (!is_file($path)) {
+		return next_default_home();
+	}
+	$home = json_decode((string) file_get_contents($path), true);
+	if (!is_array($home)) {
+		return next_default_home();
+	}
+	return array_replace_recursive(next_default_home(), $home);
+}
+
+function next_save_home(array $home): bool
+{
+	$json = json_encode($home, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+	return $json !== false && file_put_contents(next_home_path(), $json, LOCK_EX) !== false;
+}
+
+function next_plain_field(string $value): string
+{
+	return trim(strip_tags($value));
+}
+
+function next_link_field(string $value, string $fallback): string
+{
+	$value = trim(strip_tags($value));
+	return $value !== '' ? $value : $fallback;
+}
+
 function next_default_team(): array
 {
 	return [
@@ -113,6 +187,124 @@ function next_team_image_options(string $selected): string
 	return $options;
 }
 
+function next_clean_home(array $input): array
+{
+	$defaults = next_default_home();
+	$home = [
+		'hero_kicker' => next_plain_field((string) ($input['hero_kicker'] ?? $defaults['hero_kicker'])),
+		'hero_title' => next_plain_field((string) ($input['hero_title'] ?? $defaults['hero_title'])),
+		'intro_title' => next_plain_field((string) ($input['intro_title'] ?? $defaults['intro_title'])),
+		'intro_text' => next_plain_field((string) ($input['intro_text'] ?? $defaults['intro_text'])),
+		'intro_button_text' => next_plain_field((string) ($input['intro_button_text'] ?? $defaults['intro_button_text'])),
+		'intro_button_link' => next_link_field((string) ($input['intro_button_link'] ?? $defaults['intro_button_link']), $defaults['intro_button_link']),
+		'quote' => next_plain_field((string) ($input['quote'] ?? $defaults['quote'])),
+		'about' => [],
+		'cta_title' => next_plain_field((string) ($input['cta_title'] ?? $defaults['cta_title'])),
+		'cta_text' => next_plain_field((string) ($input['cta_text'] ?? $defaults['cta_text'])),
+		'cta_button_text' => next_plain_field((string) ($input['cta_button_text'] ?? $defaults['cta_button_text'])),
+		'cta_button_link' => next_link_field((string) ($input['cta_button_link'] ?? $defaults['cta_button_link']), $defaults['cta_button_link'])
+	];
+
+	foreach ($defaults['about'] as $index => $defaultItem) {
+		$item = $input['about'][$index] ?? [];
+		$home['about'][] = [
+			'letter' => $defaultItem['letter'],
+			'title' => next_plain_field((string) ($item['title'] ?? $defaultItem['title'])),
+			'text' => next_plain_field((string) ($item['text'] ?? $defaultItem['text']))
+		];
+	}
+
+	return $home;
+}
+
+function next_handle_home_post(Wcms $Wcms): void
+{
+	if (!$Wcms->loggedIn || $Wcms->currentPage !== 'home' || !isset($_POST['next_home_action'], $_POST['token'])) {
+		return;
+	}
+	if (!$Wcms->hashVerify((string) $_POST['token'])) {
+		$Wcms->alert('danger', 'Home kon niet opgeslagen worden. Probeer opnieuw in te loggen.');
+		return;
+	}
+
+	$home = next_clean_home(is_array($_POST['home'] ?? null) ? $_POST['home'] : []);
+	if (next_save_home($home)) {
+		$Wcms->alert('success', 'Home is opgeslagen.');
+	} else {
+		$Wcms->alert('danger', 'Home kon niet opgeslagen worden. Controleer of data/home.json schrijfbaar is.');
+	}
+	$Wcms->redirect(Wcms::url('home'));
+}
+
+function next_render_home_admin(array $home, string $token): string
+{
+	$output = '<section class="team-admin-panel home-admin-panel"><div class="section__inner"><h2>Home beheren</h2><form method="post">';
+	$output .= '<input type="hidden" name="token" value="' . next_html($token) . '">';
+	$output .= '<article class="team-admin-card"><h3>Intro bovenaan</h3>';
+	$output .= '<label>Kleine tekst<input type="text" name="home[hero_kicker]" value="' . next_html((string) $home['hero_kicker']) . '"></label>';
+	$output .= '<label>Grote titel<input type="text" name="home[hero_title]" value="' . next_html((string) $home['hero_title']) . '"></label>';
+	$output .= '</article>';
+	$output .= '<article class="team-admin-card"><h3>Intro sectie</h3>';
+	$output .= '<label>Titel<textarea name="home[intro_title]" rows="2">' . next_html((string) $home['intro_title']) . '</textarea></label>';
+	$output .= '<label>Tekst<textarea name="home[intro_text]" rows="5">' . next_html((string) $home['intro_text']) . '</textarea></label>';
+	$output .= '<label>Knop tekst<input type="text" name="home[intro_button_text]" value="' . next_html((string) $home['intro_button_text']) . '"></label>';
+	$output .= '<label>Knop link<input type="text" name="home[intro_button_link]" value="' . next_html((string) $home['intro_button_link']) . '"></label>';
+	$output .= '</article>';
+	$output .= '<article class="team-admin-card"><h3>Quote</h3>';
+	$output .= '<label>Quote<textarea name="home[quote]" rows="2">' . next_html((string) $home['quote']) . '</textarea></label>';
+	$output .= '</article>';
+	$output .= '<article class="team-admin-card"><h3>NEXT blokken</h3>';
+	foreach ($home['about'] as $index => $item) {
+		$output .= '<label>' . next_html((string) $item['letter']) . ' titel<input type="text" name="home[about][' . $index . '][title]" value="' . next_html((string) $item['title']) . '"></label>';
+		$output .= '<label>' . next_html((string) $item['letter']) . ' tekst<textarea name="home[about][' . $index . '][text]" rows="3">' . next_html((string) $item['text']) . '</textarea></label>';
+	}
+	$output .= '</article>';
+	$output .= '<article class="team-admin-card"><h3>Contactblok</h3>';
+	$output .= '<label>Titel<input type="text" name="home[cta_title]" value="' . next_html((string) $home['cta_title']) . '"></label>';
+	$output .= '<label>Tekst<textarea name="home[cta_text]" rows="3">' . next_html((string) $home['cta_text']) . '</textarea></label>';
+	$output .= '<label>Knop tekst<input type="text" name="home[cta_button_text]" value="' . next_html((string) $home['cta_button_text']) . '"></label>';
+	$output .= '<label>Knop link<input type="text" name="home[cta_button_link]" value="' . next_html((string) $home['cta_button_link']) . '"></label>';
+	$output .= '</article>';
+	$output .= '<div class="team-admin-actions"><button class="button" type="submit" name="next_home_action" value="save">Home opslaan</button></div>';
+	$output .= '</form></div></section>';
+	return $output;
+}
+
+function next_render_multiline(string $value): string
+{
+	return nl2br(next_html($value), false);
+}
+
+function next_render_home_page(array $home, bool $loggedIn, string $token): string
+{
+	$output = $loggedIn ? next_render_home_admin($home, $token) : '';
+	$output .= '<section class="section hero">';
+	$output .= '<div class="section__inner">';
+	$output .= '<p class="hero__kicker">' . next_html((string) $home['hero_kicker']) . '</p>';
+	$output .= '<h1>' . next_html((string) $home['hero_title']) . '</h1>';
+	$output .= '</div></section>';
+	$output .= '<section class="section home-intro-section"><div class="section__inner split"><div class="intro-copy">';
+	$output .= '<h2>' . next_render_multiline((string) $home['intro_title']) . '</h2>';
+	$output .= '<p style="text-align: justify;">' . next_render_multiline((string) $home['intro_text']) . '</p>';
+	$output .= '<div style="text-align: justify;"><a class="button" href="' . next_html((string) $home['intro_button_link']) . '">' . next_html((string) $home['intro_button_text']) . '</a></div>';
+	$output .= '</div><img class="poster poster--plain" src="data/files/FotoHome.png" alt="De volgende stap op jouw tempo"></div></section>';
+	$output .= '<section class="quote-band"><blockquote>“' . next_html((string) $home['quote']) . '”</blockquote></section>';
+	$output .= '<section class="section home-next-section">';
+	$output .= '<img class="decor decor--left" src="data/files/backgroundvisuals.png" alt="" aria-hidden="true">';
+	$output .= '<img class="decor decor--right" src="data/files/backgroundvisuals.png" alt="" aria-hidden="true">';
+	$output .= '<div class="section__inner home-next-inner"><div class="about-list">';
+	foreach ($home['about'] as $item) {
+		$output .= '<article class="about-item"><span class="about-letter">' . next_html((string) $item['letter']) . '</span><div><h2>' . next_html((string) $item['title']) . '</h2><p>' . next_render_multiline((string) $item['text']) . '</p></div></article>';
+	}
+	$output .= '</div></div></section>';
+	$output .= '<section class="section section--blue section--tight cta cta--split"><div class="section__inner"><div>';
+	$output .= '<h2>' . next_html((string) $home['cta_title']) . '</h2>';
+	$output .= '<p>' . next_render_multiline((string) $home['cta_text']) . '</p>';
+	$output .= '</div><a class="button" href="' . next_html((string) $home['cta_button_link']) . '">' . next_html((string) $home['cta_button_text']) . '</a></div></section>';
+	$output .= '<section class="pattern-band" aria-hidden="true"></section>';
+	return $output;
+}
+
 function next_handle_team_post(Wcms $Wcms): void
 {
 	if (!$Wcms->loggedIn || $Wcms->currentPage !== 'over-ons' || !isset($_POST['next_team_action'], $_POST['token'])) {
@@ -200,7 +392,9 @@ function next_replace_team_section(string $content, array $team, bool $loggedIn,
 	return $updated ?? $content . $section;
 }
 
+next_handle_home_post($Wcms);
 next_handle_team_post($Wcms);
+$home = next_load_home();
 $team = next_load_team();
 
 $footerContactDefault = '
@@ -298,7 +492,9 @@ $isLoginPage = $Wcms->currentPage === $Wcms->get('config', 'login') && !$Wcms->l
 		<main id="wrapper" class="site-main">
 			<?php
 				$pageContent = $Wcms->page('content');
-				if ($Wcms->currentPage === 'over-ons') {
+				if ($Wcms->currentPage === 'home') {
+					$pageContent = next_render_home_page($home, $Wcms->loggedIn, $Wcms->getToken());
+				} elseif ($Wcms->currentPage === 'over-ons') {
 					$pageContent = next_replace_team_section($pageContent, $team, $Wcms->loggedIn, $Wcms->getToken());
 				}
 				echo $pageContent;

@@ -1,0 +1,35 @@
+{
+    "hero_kicker": "welkom bij NEXT",
+    "hero_title": "Groeien op jouw tempo",
+    "intro_title": "De volgende stap,\nop jouw tempo",
+    "intro_text": "NEXT is een praktische dagbesteding voor jongeren die tijdelijk uitvallen of vastlopen. In een warme en veilige omgeving krijgen jongeren de ruimte om tot rust te komen, opnieuw vertrouwen op te bouwen en stap voor stap te werken aan hun toekomst.",
+    "intro_button_text": "Ontdek Wat we doen",
+    "intro_button_link": "werking",
+    "quote": "Hier mag je op jouw tempo opnieuw je weg vinden.",
+    "about": [
+        {
+            "letter": "N",
+            "title": "Nieuw begin",
+            "text": "Jongeren krijgen de kans om opnieuw te starten, zonder oordeel. We bieden een warme, neutrale en veilige plek waar jongeren zichzelf kunnen zijn."
+        },
+        {
+            "letter": "E",
+            "title": "Ervaring",
+            "text": "We bieden een praktische, zinvolle dagbesteding aan. We leren door te doen en werken zeer laagdrempelig en op maat van de jongere."
+        },
+        {
+            "letter": "X",
+            "title": "X-factor",
+            "text": "Iedereen is uniek, heeft talenten en krachten. We gaan die samen ontdekken. We nemen even de time-out en staan stil bij onszelf."
+        },
+        {
+            "letter": "T",
+            "title": "Toekomstgericht",
+            "text": "Blik vooruit. We focussen op de toekomst en gaan samen doelen bepalen. Wat komt, telt meer dan wat achter ons ligt."
+        }
+    ],
+    "cta_title": "Contact",
+    "cta_text": "Hulp nodig? Neem contact met ons op. Heb je vragen of wil je graag inschrijven? Neem dan met ons contact op.",
+    "cta_button_text": "Contacteer ons",
+    "cta_button_link": "contact"
+}
