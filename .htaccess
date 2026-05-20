@@ -1,5 +1,4 @@
 RewriteEngine On
-RewriteBase /Next-Site/
 
 # Send WonderCMS page URLs such as /home to the front controller.
 RewriteCond %{REQUEST_FILENAME} !-f
