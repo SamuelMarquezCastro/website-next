@@ -227,6 +227,7 @@ $footerContactContent = isset($blocks->footerContact) ? $blocks->footerContact->
 $footerContact = $Wcms->loggedIn
 	? $Wcms->editable('footerContact', $footerContactContent, 'blocks')
 	: $footerContactContent;
+$isLoginPage = $Wcms->currentPage === $Wcms->get('config', 'login') && !$Wcms->loggedIn;
 ?>
 
 <!DOCTYPE html>
@@ -263,12 +264,13 @@ $footerContact = $Wcms->loggedIn
 		<link rel="stylesheet" href="<?= $Wcms->asset('css/style.css') ?>">
 	</head>
 
-	<body>
+	<body class="<?= $isLoginPage ? 'is-admin-login' : '' ?>">
 		<!-- Admin settings panel and alerts -->
 		<?= $Wcms->settings() ?>
 
 		<?= $Wcms->alerts() ?>
 
+		<?php if (!$isLoginPage): ?>
 		<header class="site-header">
 			<div class="site-header__inner">
 				<a class="site-logo" href="<?= Wcms::url() ?>" aria-label="NEXT home">
@@ -291,6 +293,7 @@ $footerContact = $Wcms->loggedIn
 				</nav>
 			</div>
 		</header>
+		<?php endif; ?>
 
 		<main id="wrapper" class="site-main">
 			<?php
@@ -302,6 +305,7 @@ $footerContact = $Wcms->loggedIn
 			?>
 		</main>
 
+		<?php if (!$isLoginPage): ?>
 		<footer class="site-footer">
 			<div class="site-footer__inner">
 				<div class="footer-mark">
@@ -324,6 +328,7 @@ $footerContact = $Wcms->loggedIn
 			</div>
 			<div class="site-footer__bottom">&copy; 2026 NEXT</div>
 		</footer>
+		<?php endif; ?>
 
 		<!-- Admin JavaScript. More JS libraries can be added below -->
 		<?= $Wcms->js() ?>

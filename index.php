@@ -41,6 +41,12 @@ class Wcms
 
 	/** @var int MIN_PASSWORD_LENGTH minimum number of characters */
 	public const MIN_PASSWORD_LENGTH = 8;
+	private const PASSWORD_RESET_TTL = 1800;
+	private const PASSWORD_RESET_EMAILS = [
+		'raf@nextlier.be',
+		'debbie@nextlier.be',
+		'floor@nextlier.be',
+	];
 
 	/** @var string WCMS_REPO - repo URL */
 	public const WCMS_REPO = 'https://raw.githubusercontent.com/WonderCMS/wondercms/main/';
@@ -2115,6 +2121,16 @@ EOT;
 		if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 			return;
 		}
+
+		if (isset($_POST['password_reset_email'])) {
+			$this->passwordResetRequestAction();
+			return;
+		}
+
+		if (isset($_POST['reset_token'], $_POST['new_password'], $_POST['repeat_password'])) {
+			$this->passwordResetConfirmAction();
+			return;
+		}
 	
 		$password = $_POST['password'] ?? '';
 		$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
@@ -2143,9 +2159,97 @@ EOT;
 				'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null
 			]);
 	
-			$this->alert('test', '<script>alert("Wrong password")</script>', 1);
+			$this->alert('danger', 'Het wachtwoord klopt niet. Probeer opnieuw of gebruik wachtwoord vergeten.');
 			$this->redirect($this->get('config', 'login'));
 		}
+	}
+
+	private function passwordResetRequestAction(): void
+	{
+		$email = strtolower(trim((string) ($_POST['password_reset_email'] ?? '')));
+		$redirect = $this->get('config', 'login') . '?forgot=sent';
+
+		if (!in_array($email, self::PASSWORD_RESET_EMAILS, true)) {
+			$this->alert('success', 'Als dit e-mailadres gekend is, sturen we een resetlink.');
+			$this->redirect($redirect);
+		}
+
+		$token = bin2hex(random_bytes(32));
+		$expires = time() + self::PASSWORD_RESET_TTL;
+		$this->set('config', 'passwordReset', (object) [
+			'tokenHash' => password_hash($token, PASSWORD_DEFAULT),
+			'email' => $email,
+			'expires' => $expires,
+		]);
+
+		$resetUrl = self::url($this->get('config', 'login')) . '?reset-token=' . urlencode($token);
+		$subject = 'NEXT admin wachtwoord resetten';
+		$message = "Hallo,\n\nGebruik deze link om het admin-wachtwoord van NEXT opnieuw in te stellen:\n\n"
+			. $resetUrl
+			. "\n\nDeze link is 30 minuten geldig. Heb je dit niet aangevraagd, dan mag je deze mail negeren.\n\nNEXT";
+		$headers = [
+			'From: NEXT <no-reply@nextlier.be>',
+			'Reply-To: raf@nextlier.be',
+			'Content-Type: text/plain; charset=UTF-8',
+		];
+
+		if (@mail($email, $subject, $message, implode("\r\n", $headers))) {
+			$this->alert('success', 'We hebben een resetlink verstuurd. Controleer je mailbox.');
+		} else {
+			$this->clearPasswordResetData();
+			$this->alert('danger', 'De resetlink kon niet verstuurd worden. Controleer de mailinstellingen van de server.');
+		}
+		$this->redirect($redirect);
+	}
+
+	private function passwordResetConfirmAction(): void
+	{
+		$token = (string) ($_POST['reset_token'] ?? '');
+		$newPassword = (string) ($_POST['new_password'] ?? '');
+		$repeatPassword = (string) ($_POST['repeat_password'] ?? '');
+		$reset = $this->getPasswordResetData();
+
+		if (!$this->isPasswordResetTokenValid($token, $reset)) {
+			$this->clearPasswordResetData();
+			$this->alert('danger', 'Deze resetlink is ongeldig of verlopen. Vraag een nieuwe link aan.');
+			$this->redirect($this->get('config', 'login') . '?forgot=1');
+		}
+
+		if (strlen($newPassword) < self::MIN_PASSWORD_LENGTH) {
+			$this->alert('danger', sprintf('Het wachtwoord moet minstens %d tekens lang zijn.', self::MIN_PASSWORD_LENGTH));
+			$this->redirect($this->get('config', 'login') . '?reset-token=' . urlencode($token));
+		}
+
+		if ($newPassword !== $repeatPassword) {
+			$this->alert('danger', 'De nieuwe wachtwoorden komen niet overeen.');
+			$this->redirect($this->get('config', 'login') . '?reset-token=' . urlencode($token));
+		}
+
+		$this->set('config', 'password', password_hash($newPassword, PASSWORD_DEFAULT));
+		$this->set('config', 'forceLogout', true);
+		$this->clearPasswordResetData();
+		unset($_SESSION['loggedIn'], $_SESSION['rootDir'], $_SESSION['token']);
+		$this->alert('success', 'Je wachtwoord is aangepast. Je kan nu inloggen.');
+		$this->redirect($this->get('config', 'login'));
+	}
+
+	private function getPasswordResetData(): ?object
+	{
+		$reset = $this->get('config', 'passwordReset');
+		return $reset instanceof stdClass && isset($reset->tokenHash, $reset->expires) ? $reset : null;
+	}
+
+	private function isPasswordResetTokenValid(string $token, ?object $reset): bool
+	{
+		if ($token === '' || $reset === null || (int) $reset->expires < time()) {
+			return false;
+		}
+		return password_verify($token, (string) $reset->tokenHash);
+	}
+
+	private function clearPasswordResetData(): void
+	{
+		$this->set('config', 'passwordReset', new stdClass);
 	}
 
 	/**
@@ -2185,22 +2289,70 @@ EOT;
 	 */
 	public function loginView(): array
 	{
+		$loginUrl = self::url($this->get('config', 'login'));
+		$resetToken = trim((string) ($_GET['reset-token'] ?? ''));
+		$forgotMode = isset($_GET['forgot']);
+		$formTitle = $resetToken !== '' ? 'Nieuw wachtwoord' : ($forgotMode ? 'Wachtwoord vergeten' : 'Inloggen');
+		$formIntro = $resetToken !== ''
+			? 'Kies een nieuw admin-wachtwoord voor NEXT.'
+			: ($forgotMode
+				? 'Vul een gekend NEXT-mailadres in. We sturen een tijdelijke resetlink.'
+				: 'Beheer je website veilig en eenvoudig.');
+		$form = '
+					<form class="admin-login-form" action="' . $loginUrl . '" method="post">
+						<label for="password">Wachtwoord</label>
+						<input type="password" id="password" name="password" placeholder="Vul je wachtwoord in" autocomplete="current-password" autofocus>
+						<button type="submit" onclick="document.getElementsByClassName(\'wUpdate\')[0].classList.toggle(\'showUpdate\'); localStorage.clear();">Inloggen</button>
+						<a class="admin-login-link" href="' . $loginUrl . '?forgot=1">Wachtwoord vergeten?</a>
+					</form>';
+
+		if ($forgotMode && $resetToken === '') {
+			$form = '
+					<form class="admin-login-form" action="' . $loginUrl . '" method="post">
+						<label for="password_reset_email">E-mailadres</label>
+						<input type="email" id="password_reset_email" name="password_reset_email" placeholder="naam@nextlier.be" autocomplete="email" autofocus>
+						<button type="submit">Resetlink versturen</button>
+						<a class="admin-login-link" href="' . $loginUrl . '">Terug naar inloggen</a>
+					</form>';
+		}
+
+		if ($resetToken !== '') {
+			$form = '
+					<form class="admin-login-form" action="' . $loginUrl . '" method="post">
+						<input type="hidden" name="reset_token" value="' . htmlspecialchars($resetToken, ENT_QUOTES, 'UTF-8') . '">
+						<label for="new_password">Nieuw wachtwoord</label>
+						<input type="password" id="new_password" name="new_password" placeholder="Minstens 8 tekens" autocomplete="new-password" autofocus>
+						<label for="repeat_password">Herhaal wachtwoord</label>
+						<input type="password" id="repeat_password" name="repeat_password" placeholder="Herhaal je wachtwoord" autocomplete="new-password">
+						<button type="submit">Wachtwoord opslaan</button>
+						<a class="admin-login-link" href="' . $loginUrl . '">Terug naar inloggen</a>
+					</form>';
+		}
+
 		return [
 			'title' => $this->hook('loginView', 'Login')[0],
 			'description' => '',
 			'keywords' => '',
 			'content' => $this->hook('loginView', '
-			<style>.showUpdate{display: block !important}</style>
-				<div class="wUpdate" style="display:none;color:#ccc;left:0;top:0;width:100%;height:100%;position:fixed;text-align:center;padding-top:100px;background:rgba(51,51,51,.8);z-index:2448"><h2>Logging in and checking for updates</h2><p>This might take a moment.</p></div>
-				<form action="' . self::url($this->get('config', 'login')) . '" method="post">
-					<div class="winput-group text-center">
-						<h1>Login to your website</h1>
-						<input type="password" class="wform-control" id="password" name="password" placeholder="Password" autofocus><br><br>
-						<span class="winput-group-btn">
-							<button type="submit" class="wbtn wbtn-info" onclick="document.getElementsByClassName(\'wUpdate\')[0].classList.toggle(\'showUpdate\'); localStorage.clear();">Login</button>
-						</span>
+			<style>.showUpdate{display: grid !important}</style>
+				<div class="wUpdate admin-login-loading"><h2>Even geduld</h2><p>We controleren je login.</p></div>
+				<section class="admin-login-screen">
+					<div class="admin-login-shell">
+						<aside class="admin-login-aside">
+							<img src="' . self::url('data/files/logo next.png') . '" alt="NEXT">
+							<div>
+								<p class="admin-login-label">Admin</p>
+								<p>Websitebeheer voor NEXT.</p>
+							</div>
+						</aside>
+						<div class="admin-login-panel">
+							<p class="admin-login-eyebrow">NEXT beheer</p>
+							<h1>' . $formTitle . '</h1>
+							<p>' . $formIntro . '</p>
+							' . $form . '
+						</div>
 					</div>
-				</form>')[0]
+				</section>')[0]
 		];
 	}
 
