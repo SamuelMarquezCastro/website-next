@@ -275,7 +275,13 @@ $footerContact = $Wcms->loggedIn
 					<img src="<?= Wcms::url('data/files/logo next.png') ?>" alt="NEXT">
 				</a>
 
-				<nav class="site-nav" aria-label="Hoofdnavigatie">
+				<button class="menu-toggle" type="button" aria-label="Menu openen" aria-expanded="false" aria-controls="site-navigation">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
+
+				<nav id="site-navigation" class="site-nav" aria-label="Hoofdnavigatie">
 					<ul class="menu">
 						<?= $Wcms->menu() ?>
 						<li class="nav-item nav-item--signup">
@@ -321,7 +327,7 @@ $footerContact = $Wcms->loggedIn
 
 		<!-- Admin JavaScript. More JS libraries can be added below -->
 		<?= $Wcms->js() ?>
-		<script src="<?= $Wcms->asset('js/animations.js') ?>?v=2"></script>
+		<script src="<?= $Wcms->asset('js/animations.js') ?>?v=3"></script>
 
 	</body>
 </html>

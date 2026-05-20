@@ -1,4 +1,24 @@
 (function () {
+  const header = document.querySelector(".site-header");
+  const menuToggle = document.querySelector(".menu-toggle");
+  const siteNav = document.querySelector(".site-nav");
+
+  if (header && menuToggle && siteNav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = header.classList.toggle("site-header--menu-open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Menu sluiten" : "Menu openen");
+    });
+
+    siteNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        header.classList.remove("site-header--menu-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Menu openen");
+      });
+    });
+  }
+
   const isEditing = document.body.classList.contains("wcms-logged-in") || document.querySelector("#adminPanel");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
