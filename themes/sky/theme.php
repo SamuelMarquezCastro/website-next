@@ -261,7 +261,7 @@ $isLoginPage = $Wcms->currentPage === $Wcms->get('config', 'login') && !$Wcms->l
 		
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="https://use.typekit.net/bdd6rtl.css">
-		<link rel="stylesheet" href="<?= $Wcms->asset('css/style.css') ?>?v=4">
+		<link rel="stylesheet" href="<?= $Wcms->asset('css/style.css') ?>?v=5">
 	</head>
 
 	<body class="<?= $isLoginPage ? 'is-admin-login' : '' ?>">
