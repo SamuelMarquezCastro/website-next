@@ -477,7 +477,7 @@ button {
   padding: 0 48px;
   color: #fff;
   background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.34) 42%, rgba(0, 0, 0, 0.08) 78%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.48) 38%, rgba(0, 0, 0, 0.12) 72%, rgba(0, 0, 0, 0) 100%),
     url("../../../data/files/hero section.png") center / cover no-repeat;
 }
 
