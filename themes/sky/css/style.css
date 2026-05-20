@@ -734,9 +734,16 @@ button {
 .activity-card {
   min-height: 480px;
   padding: 0 42px 48px;
-  background: rgba(248, 241, 232, 0.88);
+  background: #fdf2e5;
   box-shadow: var(--shadow);
   text-align: left;
+}
+
+.value-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
 .activity-card__media {
