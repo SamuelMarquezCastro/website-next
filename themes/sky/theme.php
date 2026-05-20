@@ -53,6 +53,42 @@ function next_save_team(array $team): bool
 	return $json !== false && file_put_contents(next_team_path(), $json, LOCK_EX) !== false;
 }
 
+function next_upload_team_image(int $index): ?string
+{
+	$file = $_FILES['team_upload'] ?? null;
+	if (
+		!isset($file['error'][$index])
+		|| $file['error'][$index] === UPLOAD_ERR_NO_FILE
+	) {
+		return null;
+	}
+	if ($file['error'][$index] !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'][$index])) {
+		return null;
+	}
+
+	$imageInfo = @getimagesize($file['tmp_name'][$index]);
+	if ($imageInfo === false) {
+		return null;
+	}
+
+	$extension = strtolower(pathinfo((string) $file['name'][$index], PATHINFO_EXTENSION));
+	$allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+	if (!in_array($extension, $allowedExtensions, true)) {
+		return null;
+	}
+
+	$baseName = preg_replace('/[^a-z0-9]+/i', '-', pathinfo((string) $file['name'][$index], PATHINFO_FILENAME));
+	$baseName = trim((string) $baseName, '-') ?: 'teamfoto';
+	$fileName = sprintf('team-%s-%s.%s', strtolower($baseName), time(), $extension);
+	$target = next_root_path('data/files/' . $fileName);
+
+	if (!move_uploaded_file($file['tmp_name'][$index], $target)) {
+		return null;
+	}
+	@chmod($target, 0777);
+	return 'data/files/' . $fileName;
+}
+
 function next_clean_team_member(array $member): array
 {
 	$name = trim(strip_tags((string) ($member['name'] ?? '')));
@@ -90,7 +126,13 @@ function next_handle_team_post(Wcms $Wcms): void
 	$team = [];
 	foreach ($_POST['team'] ?? [] as $member) {
 		if (is_array($member)) {
-			$team[] = next_clean_team_member($member);
+			$index = count($team);
+			$cleanMember = next_clean_team_member($member);
+			$uploadedImage = next_upload_team_image($index);
+			if ($uploadedImage !== null) {
+				$cleanMember['image'] = $uploadedImage;
+			}
+			$team[] = $cleanMember;
 		}
 	}
 
@@ -113,7 +155,7 @@ function next_handle_team_post(Wcms $Wcms): void
 
 function next_render_team_admin(array $team, string $token): string
 {
-	$output = '<section class="team-admin-panel"><div class="section__inner"><h2>Team beheren</h2><form method="post">';
+	$output = '<section class="team-admin-panel"><div class="section__inner"><h2>Team beheren</h2><form method="post" enctype="multipart/form-data">';
 	$output .= '<input type="hidden" name="token" value="' . next_html($token) . '">';
 	foreach (array_values($team) as $index => $member) {
 		$name = (string) ($member['name'] ?? '');
@@ -122,7 +164,11 @@ function next_render_team_admin(array $team, string $token): string
 		$output .= '<article class="team-admin-card">';
 		$output .= '<div class="team-admin-card__top"><h3>' . next_html($name !== '' ? $name : 'Nieuw teamlid') . '</h3><button class="team-admin-delete" type="submit" name="next_team_action" value="delete:' . $index . '" onclick="return confirm(\'Teamlid verwijderen?\')">Verwijderen</button></div>';
 		$output .= '<label>Naam<input type="text" name="team[' . $index . '][name]" value="' . next_html($name) . '"></label>';
-		$output .= '<label>Foto<select name="team[' . $index . '][image]">' . next_team_image_options($image) . '</select></label>';
+		$output .= '<div class="team-admin-photo">';
+		$output .= '<img src="' . next_html($image !== '' ? $image : 'data/files/logo next.png') . '" alt="">';
+		$output .= '<div><label>Huidige foto<select name="team[' . $index . '][image]">' . next_team_image_options($image) . '</select></label>';
+		$output .= '<label>Nieuwe foto kiezen<input type="file" name="team_upload[' . $index . ']" accept="image/png,image/jpeg,image/webp,image/gif"></label></div>';
+		$output .= '</div>';
 		$output .= '<label>Tekst<textarea name="team[' . $index . '][text]" rows="6">' . next_html($text) . '</textarea></label>';
 		$output .= '</article>';
 	}
