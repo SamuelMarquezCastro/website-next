@@ -453,6 +453,14 @@ button {
   text-align: left;
 }
 
+.pillar-card,
+.audience-card,
+.activity-card,
+.value-card,
+.contact-card {
+  transition: box-shadow 220ms ease, transform 220ms ease;
+}
+
 .contact-card {
   box-shadow: var(--shadow-soft);
 }
@@ -887,6 +895,22 @@ button {
   color: var(--cream);
 }
 
+h1,
+h2,
+h3,
+h4,
+.section-title,
+.hero__kicker,
+.eyebrow,
+.quote-band blockquote,
+.nav-link,
+.button,
+.about-letter,
+.timeline-step h2,
+.footer-col h2 {
+  font-weight: 400;
+}
+
 .footer-contact__item {
   display: grid;
   grid-template-columns: 28px minmax(0, 1fr);
@@ -980,6 +1004,20 @@ button {
 .has-scroll-animations .hero-art.reveal-on-scroll.is-visible,
 .has-scroll-animations .vision-pillars-image.reveal-on-scroll.is-visible {
   transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1);
+}
+
+.pillar-card:hover,
+.audience-card:hover,
+.activity-card:hover,
+.value-card:hover,
+.contact-card:hover,
+.has-scroll-animations .pillar-card.reveal-on-scroll.is-visible:hover,
+.has-scroll-animations .audience-card.reveal-on-scroll.is-visible:hover,
+.has-scroll-animations .activity-card.reveal-on-scroll.is-visible:hover,
+.has-scroll-animations .value-card.reveal-on-scroll.is-visible:hover,
+.has-scroll-animations .contact-card.reveal-on-scroll.is-visible:hover {
+  box-shadow: 0 20px 40px rgba(35, 45, 33, 0.18);
+  transform: translate3d(0, -8px, 0) scale(1.015);
 }
 
 .has-scroll-animations .timeline::before {
