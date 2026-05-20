@@ -1,6 +1,24 @@
 .note-editor, .note-editing-area{background-color:transparent !important;color:inherit !important}
 .note-editor.note-frame .note-editing-area .note-editable{color:inherit; background-color:transparent !important}
 .note-editor.note-frame {border: 2px dashed #ccc}
+.cms-locked-section {
+	pointer-events: none;
+	position: relative;
+}
+
+.cms-locked-section::before {
+	background: rgba(112, 130, 106, 0.92);
+	border-radius: 4px;
+	color: #fff8ee;
+	content: "Vast onderdeel";
+	font: 700 12px/1 Arial, sans-serif;
+	padding: 6px 8px;
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	z-index: 5;
+}
+
 .dropdown-toggle::after {
 	display: inline-block;
 	margin-left: .255em;

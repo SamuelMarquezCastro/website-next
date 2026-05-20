@@ -29,6 +29,8 @@ class Wcms
 	];
 	private const DISABLED_PLUGINS_KEY = 'disabledPlugins';
 	private const EXCLUSIVE_PLUGIN_GROUPS = ['editor', 'translation'];
+	private const LOCKED_PAGE_CONTENT = ['werking', 'visie'];
+	private const PARTIAL_LOCK_PAGE_CONTENT = ['voor-wie'];
 
 	/** Database main keys */
 	public const DB_CONFIG = 'config';
@@ -2410,16 +2412,60 @@ EOT;
 		}
 
 		$segments->content = $segments->content ?? '<h2>Click here add content</h2>';
+		$pageContent = $segments->content;
+		if ($this->loggedIn && $this->isPartiallyLockedPageContent()) {
+			$pageContent = $this->lockEditablePageSections($pageContent);
+		}
+
 		$keys = [
 			'title' => $segments->title,
 			'description' => $segments->description,
 			'keywords' => $segments->keywords,
-			'content' => $this->loggedIn
-				? $this->editable('content', $segments->content, 'pages')
-				: $segments->content
+			'content' => $this->loggedIn && $this->isCurrentPageContentEditable()
+				? $this->editable('content', $pageContent, 'pages')
+				: $pageContent
 		];
 		$content = $keys[$key] ?? '';
 		return $this->hook('page', $content, $key)[0];
+	}
+
+	private function isCurrentPageContentEditable(): bool
+	{
+		return !in_array($this->currentPage, self::LOCKED_PAGE_CONTENT, true);
+	}
+
+	private function isPartiallyLockedPageContent(): bool
+	{
+		return in_array($this->currentPage, self::PARTIAL_LOCK_PAGE_CONTENT, true);
+	}
+
+	private function lockEditablePageSections(string $content): string
+	{
+		$content = preg_replace_callback(
+			'~<section class="section center">(?=.*?<h2 class="section-title section-title--green">Onze activiteiten</h2>)(.*?)</section>~s',
+			static function (array $matches): string {
+				$section = $matches[0];
+				if (str_contains($section, 'cms-locked-section')) {
+					return $section;
+				}
+				return preg_replace(
+					'~<section class="section center"~',
+					'<section class="section center cms-locked-section" contenteditable="false" data-cms-locked="true"',
+					$section,
+					1
+				);
+			},
+			$content
+		);
+
+		return $content ?? '';
+	}
+
+	private function unlockEditablePageSections(string $content): string
+	{
+		$content = str_replace(' cms-locked-section', '', $content);
+		$content = str_replace(' contenteditable="false"', '', $content);
+		return str_replace(' data-cms-locked="true"', '', $content);
 	}
 
 	/**
@@ -2650,8 +2696,18 @@ EOT;
 			if ($target === 'config') {
 				$this->set('config', $fieldname, $content);
 			} elseif ($target === 'blocks') {
+				if (!isset($this->db->blocks->{$fieldname})) {
+					$this->db->blocks->{$fieldname} = (object)['content' => ''];
+				}
 				$this->set('blocks', $fieldname, 'content', $content);
 			} elseif ($target === 'pages') {
+				if ($fieldname === 'content' && !$this->isCurrentPageContentEditable()) {
+					$this->alert('info', 'Deze pagina-inhoud is vastgezet en kan niet via de CMS aangepast worden.');
+					return;
+				}
+				if ($fieldname === 'content' && $this->isPartiallyLockedPageContent()) {
+					$content = $this->unlockEditablePageSections($content);
+				}
 				if (!$this->currentPageExists) {
 					$this->createPage($this->currentPageTree, true);
 				}
