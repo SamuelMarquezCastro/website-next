@@ -14,6 +14,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "CoconPro";
+  src: local("CoconPro"), local("Cocon Pro");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bennet Text One";
+  src: local("Bennet Text One"), local("Bennett Text One");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --cream: #f8f1e8;
   --ink: #1f1f1f;
@@ -29,6 +45,8 @@
   --shadow: 0 14px 28px rgba(35, 45, 33, 0.12);
   --shadow-soft: 0 16px 34px rgba(35, 45, 33, 0.1);
   --content: 1180px;
+  --font-heading: "CoconPro", "Catamaran", Arial, sans-serif;
+  --font-body: "Bennet Text One", "Catamaran", Arial, sans-serif;
 }
 
 *,
@@ -47,7 +65,7 @@ body {
   margin: 0;
   background: var(--cream);
   color: var(--ink);
-  font-family: "Catamaran", Arial, sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
 }
 
@@ -56,7 +74,7 @@ button,
 input,
 textarea,
 select {
-  font: 400 16px/1.35 "Catamaran", Arial, sans-serif;
+  font: 400 16px/1.35 var(--font-body);
 }
 
 h1,
@@ -69,6 +87,21 @@ blockquote,
 ul,
 ol {
   margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+.section-title,
+.hero__kicker,
+.eyebrow,
+.quote-band blockquote,
+.nav-link,
+.button,
+.about-letter,
+.footer-col h2 {
+  font-family: var(--font-heading);
 }
 
 ul,
