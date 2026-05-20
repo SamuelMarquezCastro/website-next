@@ -57,6 +57,7 @@ $footerContact = $Wcms->loggedIn
 		<?= $Wcms->css() ?>
 		
 		<!-- Theme CSS -->
+		<link rel="stylesheet" href="https://use.typekit.net/bdd6rtl.css">
 		<link rel="stylesheet" href="<?= $Wcms->asset('css/style.css') ?>">
 	</head>
 
