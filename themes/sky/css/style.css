@@ -1754,6 +1754,10 @@ h4,
 
   .timeline-step {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "number"
+      "icon"
+      "content";
     text-align: center;
   }
 
@@ -1763,10 +1767,15 @@ h4,
 
   .timeline-step__number {
     margin: 0 auto;
+    grid-area: number;
   }
 
   .timeline-step__icon,
-  .timeline-step__icon--right,
+  .timeline-step__icon--right {
+    grid-area: icon;
+    margin: 0 auto 12px;
+  }
+
   .timeline-step > div,
   .timeline-step:nth-child(even) > div,
   .timeline-step:nth-child(even) .timeline-step__icon,
@@ -1774,6 +1783,11 @@ h4,
     grid-column: 1;
     justify-self: center;
     text-align: center;
+  }
+
+  .timeline-step > div,
+  .timeline-step:nth-child(even) > div {
+    grid-area: content;
   }
 
   .timeline-step p,
