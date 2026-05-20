@@ -1,6 +1,13 @@
-RewriteEngine On
+Options -MultiViews
+DirectoryIndex index.php
 
-# Send WonderCMS page URLs such as /home to the front controller.
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteEngine On
+RewriteBase /
+
+# Keep real files and folders working normally.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Send WonderCMS page URLs such as /home or /admin to the front controller.
 RewriteRule ^(.+)$ index.php?page=$1 [QSA,L]
