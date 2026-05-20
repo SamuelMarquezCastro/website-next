@@ -1,6 +1,162 @@
 <?php
 global $Wcms;
 
+function next_root_path(string $path = ''): string
+{
+	return dirname(__DIR__, 2) . ($path !== '' ? '/' . ltrim($path, '/') : '');
+}
+
+function next_html(string $value): string
+{
+	return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
+
+function next_team_path(): string
+{
+	return next_root_path('data/team.json');
+}
+
+function next_default_team(): array
+{
+	return [
+		[
+			'name' => 'Debbie',
+			'image' => 'data/files/Debbie.png',
+			'text' => "Ik ben Debbie en al meer dan 15 jaar actief in het secundair onderwijs: eerst als leerkracht en de laatste jaren als leerlingenbegeleidster. Samen met mijn man Raf en zoontje Jax, vormen we een hecht team. Ik ben heel empathisch en werk graag samen met jongeren. Ik ben geduldig en heb een luisterend oor. Respect en dankbaarheid zijn belangrijke waarden in mijn leven. Soms lukt het gewoon even niet meer, om eender welke reden dan ook. Ik zou heel graag naar je verhaal luisteren, of gewoon even naast je zitten. Ik hoop dat NEXT een plek kan worden waar je je als jongere gezien en gehoord voelt en dat er ergens terug een klein 'vuurtje' wordt aangewakkerd."
+		],
+		[
+			'name' => 'Raf',
+			'image' => 'data/files/Raf.png',
+			'text' => 'Ik ben Raf en de voorbije 15 jaar werkte ik als zelfstandige in de fitness-sector. Daarnaast was ik eveneens stagebegeleider in de richting Beweging en Sport bij Atheneum Louis Zimmer. Tijdens mijn jaren als leraar LO ontdekte ik de kracht van beweging en meer bepaald het effect ervan op het algemeen welzijn. Bij NEXT zal je deze kracht zelf ervaren en begeleid ik jou graag mee tijdens jouw persoonlijk traject.'
+		],
+		[
+			'name' => 'Floor',
+			'image' => 'data/files/floor.png',
+			'text' => 'Floor hier! Een enthousiaste en empathische spring-in-\'t-veld. Naast NEXT ben ik een maatschappelijk werker op een CLB. Ik heb nog niet zoveel werkervaring op mijn teller staan zoals mijn twee toppers van collega\'s, maar ik volg graag het motto van Pipi Langkous: "Ik heb het nog nooit gedaan, dus ik denk dat ik het wel kan." Met een open blik kijk ik graag mee naar jouw verhaal en probeer ik samen met jou handvaten te vinden, waar het even onstabiel voelt. Ik hoop dat NEXT een plek mag zijn waar je je welkom voelt, waar er tijd en ruimte is voor jou, waar we stap voor stap een weg vooruit kunnen zoeken of net even een moment pauze inlassen.'
+		]
+	];
+}
+
+function next_load_team(): array
+{
+	$path = next_team_path();
+	if (!is_file($path)) {
+		return next_default_team();
+	}
+	$team = json_decode((string) file_get_contents($path), true);
+	return is_array($team) ? $team : next_default_team();
+}
+
+function next_save_team(array $team): bool
+{
+	$json = json_encode(array_values($team), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+	return $json !== false && file_put_contents(next_team_path(), $json, LOCK_EX) !== false;
+}
+
+function next_clean_team_member(array $member): array
+{
+	$name = trim(strip_tags((string) ($member['name'] ?? '')));
+	$image = trim(strip_tags((string) ($member['image'] ?? '')));
+	$text = trim(strip_tags((string) ($member['text'] ?? '')));
+	return [
+		'name' => $name !== '' ? $name : 'Nieuw teamlid',
+		'image' => $image !== '' ? $image : 'data/files/logo next.png',
+		'text' => $text
+	];
+}
+
+function next_team_image_options(string $selected): string
+{
+	$files = glob(next_root_path('data/files') . '/*.{png,jpg,jpeg,webp,gif}', GLOB_BRACE) ?: [];
+	$options = '';
+	foreach ($files as $file) {
+		$value = 'data/files/' . basename($file);
+		$isSelected = $value === $selected ? ' selected' : '';
+		$options .= '<option value="' . next_html($value) . '"' . $isSelected . '>' . next_html(basename($file)) . '</option>';
+	}
+	return $options;
+}
+
+function next_handle_team_post(Wcms $Wcms): void
+{
+	if (!$Wcms->loggedIn || $Wcms->currentPage !== 'over-ons' || !isset($_POST['next_team_action'], $_POST['token'])) {
+		return;
+	}
+	if (!$Wcms->hashVerify((string) $_POST['token'])) {
+		$Wcms->alert('danger', 'Team kon niet opgeslagen worden. Probeer opnieuw in te loggen.');
+		return;
+	}
+
+	$team = [];
+	foreach ($_POST['team'] ?? [] as $member) {
+		if (is_array($member)) {
+			$team[] = next_clean_team_member($member);
+		}
+	}
+
+	$action = (string) $_POST['next_team_action'];
+	if ($action === 'add') {
+		$team[] = ['name' => 'Nieuw teamlid', 'image' => 'data/files/logo next.png', 'text' => 'Schrijf hier de tekst voor dit teamlid.'];
+	}
+	if (str_starts_with($action, 'delete:')) {
+		$deleteIndex = (int) substr($action, 7);
+		unset($team[$deleteIndex]);
+	}
+
+	if (next_save_team($team)) {
+		$Wcms->alert('success', 'Team is opgeslagen.');
+	} else {
+		$Wcms->alert('danger', 'Team kon niet opgeslagen worden. Controleer of data/team.json schrijfbaar is.');
+	}
+	$Wcms->redirect(Wcms::url('over-ons'));
+}
+
+function next_render_team_admin(array $team, string $token): string
+{
+	$output = '<section class="team-admin-panel"><div class="section__inner"><h2>Team beheren</h2><form method="post">';
+	$output .= '<input type="hidden" name="token" value="' . next_html($token) . '">';
+	foreach (array_values($team) as $index => $member) {
+		$name = (string) ($member['name'] ?? '');
+		$image = (string) ($member['image'] ?? '');
+		$text = (string) ($member['text'] ?? '');
+		$output .= '<article class="team-admin-card">';
+		$output .= '<div class="team-admin-card__top"><h3>' . next_html($name !== '' ? $name : 'Nieuw teamlid') . '</h3><button class="team-admin-delete" type="submit" name="next_team_action" value="delete:' . $index . '" onclick="return confirm(\'Teamlid verwijderen?\')">Verwijderen</button></div>';
+		$output .= '<label>Naam<input type="text" name="team[' . $index . '][name]" value="' . next_html($name) . '"></label>';
+		$output .= '<label>Foto<select name="team[' . $index . '][image]">' . next_team_image_options($image) . '</select></label>';
+		$output .= '<label>Tekst<textarea name="team[' . $index . '][text]" rows="6">' . next_html($text) . '</textarea></label>';
+		$output .= '</article>';
+	}
+	$output .= '<div class="team-admin-actions"><button class="button" type="submit" name="next_team_action" value="save">Team opslaan</button><button class="button button--secondary" type="submit" name="next_team_action" value="add">Teamlid toevoegen</button></div>';
+	$output .= '</form></div></section>';
+	return $output;
+}
+
+function next_render_team_section(array $team, bool $loggedIn, string $token): string
+{
+	$output = $loggedIn ? next_render_team_admin($team, $token) : '';
+	$output .= '<section class="section center team-section">';
+	$output .= '<img class="decor decor--right" src="data/files/backgroundvisuals.png" alt="" aria-hidden="true">';
+	$output .= '<div class="section__inner"><h2 class="section-title">Ons Team</h2><div class="team-list">';
+	foreach ($team as $member) {
+		$name = next_html((string) ($member['name'] ?? ''));
+		$image = next_html((string) ($member['image'] ?? 'data/files/logo next.png'));
+		$text = nl2br(next_html((string) ($member['text'] ?? '')));
+		$output .= '<article class="team-member"><img src="' . $image . '" alt="' . $name . '"><div><h3>' . $name . '</h3><p>' . $text . '</p></div></article>';
+	}
+	$output .= '</div></div></section>';
+	return $output;
+}
+
+function next_replace_team_section(string $content, array $team, bool $loggedIn, string $token): string
+{
+	$section = next_render_team_section($team, $loggedIn, $token);
+	$updated = preg_replace('~<section class="section center team-section">.*?</section>~s', $section, $content, 1);
+	return $updated ?? $content . $section;
+}
+
+next_handle_team_post($Wcms);
+$team = next_load_team();
+
 $footerContactDefault = '
 	<p class="footer-contact__item">
 		<span class="footer-contact__icon" aria-hidden="true">
@@ -85,7 +241,13 @@ $footerContact = $Wcms->loggedIn
 		</header>
 
 		<main id="wrapper" class="site-main">
-			<?= $Wcms->page('content') ?>
+			<?php
+				$pageContent = $Wcms->page('content');
+				if ($Wcms->currentPage === 'over-ons') {
+					$pageContent = next_replace_team_section($pageContent, $team, $Wcms->loggedIn, $Wcms->getToken());
+				}
+				echo $pageContent;
+			?>
 		</main>
 
 		<footer class="site-footer">

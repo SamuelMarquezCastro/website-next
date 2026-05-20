@@ -29,7 +29,7 @@ class Wcms
 	];
 	private const DISABLED_PLUGINS_KEY = 'disabledPlugins';
 	private const EXCLUSIVE_PLUGIN_GROUPS = ['editor', 'translation'];
-	private const LOCKED_PAGE_CONTENT = ['werking', 'visie'];
+	private const LOCKED_PAGE_CONTENT = ['werking', 'visie', 'over-ons'];
 	private const PARTIAL_LOCK_PAGE_CONTENT = ['voor-wie'];
 
 	/** Database main keys */
