@@ -272,7 +272,7 @@ button {
   justify-content: space-between;
   gap: 42px;
   padding: 42px 36px;
-  background: #1f4a2f;
+  background: #f7ab33;
   color: var(--cream);
 }
 
@@ -366,7 +366,7 @@ button {
   min-height: 50px;
   margin-top: 6px;
   border-radius: 6px;
-  background: #1f4a2f;
+  background: #f7ab33;
   color: #fff;
   font-size: 16px;
   font-weight: 700;
@@ -375,7 +375,7 @@ button {
 
 .admin-login-form button:hover,
 .admin-login-form button:focus-visible {
-  background: #183b25;
+  background: #e39822;
   transform: translateY(-1px);
 }
 

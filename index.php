@@ -2367,9 +2367,7 @@ EOT;
 			|| ($this->currentPage === 'logout'
 				&& isset($_REQUEST['token'])
 				&& $this->hashVerify($_REQUEST['token']))) {
-			$to = isset($_GET['to']) && !empty($_GET['to']) && !$this->isLogoutToLoginScreenEnabled()
-				? $_GET['to']
-				: $this->get('config', 'login');
+			$to = $forceLogout ? $this->get('config', 'login') : '';
 			unset($_SESSION['loggedIn'], $_SESSION['rootDir'], $_SESSION['token'], $_SESSION['alert']);
 			$this->redirect($to);
 		}
