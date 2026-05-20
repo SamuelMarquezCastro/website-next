@@ -2410,7 +2410,10 @@ EOT;
 	 */
 	public function notFoundResponse(): void
 	{
-		if (!$this->loggedIn && !$this->currentPageExists && $this->headerResponseDefault) {
+		if (!$this->loggedIn
+			&& !$this->currentPageExists
+			&& $this->currentPage !== $this->get('config', 'login')
+			&& $this->headerResponseDefault) {
 			$this->headerResponse = 'HTTP/1.1 404 Not Found';
 		}
 	}
@@ -2706,6 +2709,10 @@ EOT;
 
 		if (!isset($page) || !$page) {
 			$defaultPage = $this->get('config', 'defaultPage');
+			if ($defaultPage === $this->get('config', 'login')) {
+				$defaultPage = 'home';
+				$this->set('config', 'defaultPage', $defaultPage);
+			}
 			$this->currentPageTree = explode('/', $defaultPage);
 			return $defaultPage;
 		}
