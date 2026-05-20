@@ -477,7 +477,7 @@ button {
   padding: 0 48px;
   color: #fff;
   background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.08) 68%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.34) 42%, rgba(0, 0, 0, 0.08) 78%),
     url("../../../data/files/hero section.png") center / cover no-repeat;
 }
 
@@ -1486,9 +1486,9 @@ h4,
   .site-nav .menu {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     justify-content: stretch;
-    gap: 10px;
+    gap: 6px;
   }
 
   .nav-link,
@@ -1496,9 +1496,26 @@ h4,
   .menu > .nav-item:nth-last-child(2) .nav-link {
     width: 100%;
     min-width: 0;
-    min-height: 46px;
-    padding: 8px 12px;
-    font-size: 15px;
+    min-height: 44px;
+    padding: 9px 12px;
+    font-size: 17px;
+  }
+
+  .site-nav .nav-link {
+    justify-content: flex-start;
+  }
+
+  .site-nav .active > .nav-link {
+    color: var(--green);
+  }
+
+  .nav-item--signup {
+    margin-top: 10px;
+  }
+
+  .nav-item--signup .nav-link,
+  .menu > .nav-item:nth-last-child(2) .nav-link {
+    justify-content: center;
   }
 
   .site-main {
@@ -1656,8 +1673,12 @@ h4,
   .nav-link,
   .nav-item--signup .nav-link,
   .menu > .nav-item:nth-last-child(2) .nav-link {
-    min-height: 42px;
     font-size: 14px;
+  }
+
+  .site-nav .nav-link {
+    min-height: 42px;
+    font-size: 18px;
   }
 
   .menu > .nav-item:nth-last-child(2) {
