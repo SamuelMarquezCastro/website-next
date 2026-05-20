@@ -434,8 +434,7 @@ button {
   width: min(100%, 760px);
 }
 
-.pillar-card,
-.contact-card {
+.pillar-card {
   border: 3px solid var(--orange);
   border-radius: 6px;
   padding: 30px;
@@ -444,7 +443,8 @@ button {
 }
 
 .audience-card,
-.value-card {
+.value-card,
+.contact-card {
   min-height: 230px;
   padding: 34px 34px 38px;
   background: rgba(248, 241, 232, 0.88);
@@ -462,7 +462,9 @@ button {
 }
 
 .contact-card {
-  box-shadow: var(--shadow-soft);
+  min-height: 210px;
+  padding: 28px 26px 30px;
+  text-align: center;
 }
 
 .pillar-card img,
@@ -483,9 +485,9 @@ button {
 }
 
 .contact-card img {
-  width: 64px;
-  height: 64px;
-  margin-bottom: 22px;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 18px;
 }
 
 .pillar-card h3,
@@ -847,7 +849,11 @@ button {
 }
 
 .contact-grid--cards {
-  margin-top: 90px;
+  margin-top: 72px;
+}
+
+.contact-page .lead {
+  color: var(--green);
 }
 
 .map-frame {
